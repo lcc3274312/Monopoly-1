@@ -5,18 +5,16 @@ import data.global.Game;
 
 public class Window {
 	
-/*	public static void main(String[] args) {
-		showDateInfo();
-		showMenu();
-		showCellInfo(5);
-	}*/
-	
 	public static void showGreeting() {
 		//String a = Vocab.DateInfo;
 	}
 	
 	public static void nameInputForPlayer(int index) {
 		System.out.printf(Vocab.NameInputPrompt, index);
+	}
+	
+	public static void showMapRegeneratePrompt() {
+		System.out.print(Vocab.MapRegeneratePrompt);
 	}
 	
 	public static void showDateInfo() {
@@ -28,6 +26,7 @@ public class Window {
 		for (int i = 0; i < Vocab.Command.length; i++) {
 			System.out.println(i + " - " + Vocab.Command[i]);
 		}
+		System.out.printf("ÇëÑ¡Ôñ£º");
 	}
 	
 	public static void showCellInfo(int index) {      // index has been ensured

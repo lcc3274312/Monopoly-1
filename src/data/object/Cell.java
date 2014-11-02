@@ -6,8 +6,8 @@ import data.module.Vocab;
 public class Cell {
 	// attr accessor
 	public int type = 0;
-	String icon = "\u3000\u3000";
-	int street = -1, streetNo = -1;
+	String icon = Vocab.CellIcon[type];
+	int street = 0, streetNo = 0;
 	int x = 0, y = 0;
 	Player owner = null;
 	int level = 0, price = 0;

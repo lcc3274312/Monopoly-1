@@ -4,6 +4,9 @@ public class Vocab {
 	/** Name input prompt */
 	public static final String NameInputPrompt = "请设定角色%d的名字：";
 	
+	/** Map Re-generate prompt */
+	public static final String MapRegeneratePrompt = "输入r重新生成地图，其余任意键接受地图";
+	
 	/** Date output */
 	public static final String DateInfo = "今天是2014年%d月%d日\n";
 	
@@ -46,7 +49,19 @@ public class Vocab {
 		"新闻",
 		"彩票",
 		"赠送道具点",
-		"赠送点券点",
+		"赠送点券点"
+	};
+	
+	public static final String[] StreetName = {
+		"",     // when 0, the cell is not for sell
+		"まいづる鎮守府#%d",
+		"よこすか鎮守府#%d",
+		"くれ鎮守府#%d",
+		"させぼ鎮守府#%d",
+		"おおみなと警備府#%d",
+		"トラック泊地#%d",
+		"リンガ泊地#%d",
+		"ラバウル基地#%d"
 	};
 	
 	public static final String InputError = "不可用的输入值！请重新输入：";
