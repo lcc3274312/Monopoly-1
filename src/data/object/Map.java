@@ -1,7 +1,9 @@
 package data.object;
 
+import data.global.Game;
 import data.module.Helper;
 import data.module.Vocab;
+import data.module.Window;
 
 public class Map {
 	// attr_accessor
@@ -26,6 +28,40 @@ public class Map {
 	public void generateByRandom() {
 		generateShape();
 		generateSite();
+	}
+	
+	public void showBarrier(int step) {
+		int location = Game.players[Game.currentPlayer].location;
+		for (int i = 0; i < step; i++) {
+			if (Game.mapWithInfo.route[Helper.ensure(location + i + 1)].isBarrier) {
+				Window.showBarrier(i + 1);
+			}
+		}
+	}
+	
+	/** To print the map */
+	public void show() {
+		// Print image
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++) {
+				System.out.print(image[j][i]);
+			}
+			System.out.println();
+		}
+	}
+	
+	/** To clear the map */
+	public void clear() {
+		// clear image
+		for (int i = 0; i < WIDTH; i++ ) {
+			for (int j = 0; j < HEIGHT; j++ ) {
+				image[i][j] = "\u3000\u3000";
+			}
+		}
+		// clear route
+		for (int i = 0; i < route.length; i++) {
+			route[i] = new Cell();
+		}
 	}
 	
 	private void generateShape() {
@@ -103,12 +139,14 @@ public class Map {
 		int randStMaxNo = 0, randSiteType = 0;
 		for (int i = 0; i < 4; i++) {
 			randStMaxNo = Helper.rand(3) + 4;
+			// create a street
 			for (int j = 0; j < randStMaxNo; j++) {
 				route[step].street = street;
 				route[step].streetNo = j + 1;
 				step++;
 			}
 			street++;
+			// create 1 or 2 special site
 			for (int j = 0; j < Helper.rand(2) + 1; j++) {
 				do {
 					randSiteType = Helper.rand(6) + 1;
@@ -117,12 +155,14 @@ public class Map {
 				route[step].icon = Vocab.CellIcon[randSiteType];
 				step++;
 			}
+			// create a street
 			for (int j = 0; j < (10 - randStMaxNo); j++) {
 				route[step].street = street;
 				route[step].streetNo = j + 1;
 				step++;
 			}
 			street++;
+			// create 1 or 2 special site
 			for (int j = 0; j < Helper.rand(2) + 1; j++) {
 				do {
 					randSiteType = Helper.rand(6) + 1;
@@ -132,6 +172,7 @@ public class Map {
 				step++;
 			}
 		}
+		// create remaining special site
 		for (int j = step; j < route.length; j++) {
 			do {
 				randSiteType = Helper.rand(6) + 1;
@@ -141,33 +182,26 @@ public class Map {
 			step++;
 		}
 	}
-
-	/** To print the map */
-	public void show() {
-		// Update image by route
+	
+	/** Update image by route.
+	 * For map, use only when generate.
+	 * For mapWithInfo, use every time to show.(Info is changing.) */
+	public void update() {
 		for (int i = 0; i < route.length; i++) {
 			image[route[i].x][route[i].y] = route[i].icon;
 		}
-		// Print image
-		for (int i = 0; i < HEIGHT; i++) {
-			for (int j = 0; j < WIDTH; j++) {
-				System.out.print(image[j][i]);
-			}
-			System.out.println();
-		}
 	}
 	
-	/** To clear the map */
-	public void clear() {
-		// clear image
-		for (int i = 0; i < WIDTH; i++ ) {
-			for (int j = 0; j < HEIGHT; j++ ) {
-				image[i][j] = "\u3000\u3000";
+	/** Add players' icon on mapWithInfo */
+	public void addPlayersInfo() {
+		for (int i = 0; i < Game.players.length; i++) {
+			if ( i != Game.currentPlayer) {
+				image[route[Game.players[i].location].x][route[Game.players[i].location].y] = Vocab.PlayerIcon[i];
 			}
 		}
-		// clear route
-		for (int i = 0; i < route.length; i++) {
-			route[i] = new Cell();
-		}
+		// ensure current player's icon is displayed on the front when two players on the same cell
+		image[route[Game.players[Game.currentPlayer].location].x][route[Game.players[Game.currentPlayer].location].y] = Vocab.PlayerIcon[Game.currentPlayer];
 	}
+	
+
 }

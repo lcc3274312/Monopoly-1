@@ -15,7 +15,7 @@ public class Helper {
 	public static int ensure(int location) {
 		if (location > Map.length) {
 			location -= Map.length;
-		} else if (location < Map.length) {
+		} else if (location < 0) {
 			location += Map.length;
 		}
 		return location;

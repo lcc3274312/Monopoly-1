@@ -64,5 +64,8 @@ public class Vocab {
 		"ラバウル基地#%d"
 	};
 	
+	public static final String BarrierInfo = "前方第%d步处为路障，请注意。\n";
+	public static final String NoBarrierInfo = "前方%d步内没有路障。\n";
+	
 	public static final String InputError = "不可用的输入值！请重新输入：";
 }

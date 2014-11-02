@@ -1,7 +1,7 @@
 package data.module;
 
 import data.global.Game;
-//import data.object.*;
+import data.object.*;
 
 public class Window {
 	
@@ -27,6 +27,20 @@ public class Window {
 			System.out.println(i + " - " + Vocab.Command[i]);
 		}
 		System.out.printf("«Î—°‘Ò£∫");
+	}
+	
+	public static void showBarrier(int step) {
+		int location = Game.players[Game.currentPlayer].location;
+		boolean flag = false;
+		for (int i = 0; i < step; i++) {
+			if (Game.mapWithInfo.route[Helper.ensure(location + i + 1)].isBarrier) {
+				System.out.printf(Vocab.BarrierInfo, i + 1);
+				flag = true;
+			}
+		}
+		if (!flag) {
+			System.out.printf(Vocab.NoBarrierInfo, step);
+		}
 	}
 	
 	public static void showCellInfo(int index) {      // index has been ensured

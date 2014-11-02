@@ -11,7 +11,7 @@ public class Cell {
 	int x = 0, y = 0;
 	Player owner = null;
 	int level = 0, price = 0;
-	boolean isBarrier = false;
+	public boolean isBarrier = false;
 	
 	// def initialize
 	public Cell() {

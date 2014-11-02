@@ -17,14 +17,21 @@ public class Monopoly {
 			while (true) {              // break if one player finish
 				Window.showMenu();
 				switch (Helper.getInt(0, Vocab.Command.length - 1)) {
-				case 0: Game.map.show(); break;
-				//case 1: Game.mapWithInfo.show(); break;
+				case 0: // show map with info
+					Game.mapWithInfo.update();
+					Game.mapWithInfo.addPlayersInfo();
+					Game.mapWithInfo.show(); 
+					break;
+				case 1: // show original map
+					Game.map.show(); 
+					break;
+				case 3: // show barrier in 10 steps
+					Window.showBarrier(10);
 				}
 				break;
 			}
 			break;
-		}
-		
+		}		
 	}
 
 	
@@ -54,6 +61,7 @@ public class Monopoly {
 		do {
 			Game.map.clear();
 			Game.map.generateByRandom();
+			Game.map.update();
 			Game.map.show();
 			Window.showMapRegeneratePrompt();
 		} while (Helper.getStr().equals("r"));
