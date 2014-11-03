@@ -43,8 +43,20 @@ public class Window {
 		}
 	}
 	
-	public static void showCellInfo(int index) {      // index has been ensured
-		System.out.println(Vocab.CellTypeName[Game.mapWithInfo.route[index].type]);
+	public static void StepInputPrompt() {
+		System.out.print(Vocab.StepInputPrompt);
+	}
+	
+	public static void showCellInfo(int step) {      // step > 0 => anti clock direction
+		int location = Helper.ensure(Game.players[Game.currentPlayer].location + step);
+		System.out.printf("%-8s" + Vocab.CellTypeName[Game.mapWithInfo.route[location].type], Vocab.CellInfoListHead[0]);
+		if (Game.mapWithInfo.route[location].type == 0) {
+			System.out.printf("%-8s" + Vocab.StreetName[Game.mapWithInfo.route[location].street], Vocab.CellInfoListHead[1], Game.mapWithInfo.route[location].streetNo);
+			System.out.printf("%-6s" + Game.mapWithInfo.route[location].price + "\n", Vocab.CellInfoListHead[2]);
+			System.out.printf("%-6s" + Game.mapWithInfo.route[location].level + "\n", Vocab.CellInfoListHead[3]);
+			System.out.printf("%-7s" + Game.mapWithInfo.route[location].owner.name + "\n", Vocab.CellInfoListHead[4]);
+		}
+		
 	}
 
 }

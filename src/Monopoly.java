@@ -16,18 +16,7 @@ public class Monopoly {
 			Window.showDateInfo();
 			while (true) {              // break if one player finish
 				Window.showMenu();
-				switch (Helper.getInt(0, Vocab.Command.length - 1)) {
-				case 0: // show map with info
-					Game.mapWithInfo.update();
-					Game.mapWithInfo.addPlayersInfo();
-					Game.mapWithInfo.show(); 
-					break;
-				case 1: // show original map
-					Game.map.show(); 
-					break;
-				case 3: // show barrier in 10 steps
-					Window.showBarrier(10);
-				}
+				menuSelection();
 				break;
 			}
 			break;
@@ -47,8 +36,8 @@ public class Monopoly {
 	// private def method
 	/** Enable user to set player's name and give an icon */
 	public static void setPlayers() {
-		for (int i = 0; i < Game.players.length; i++) {
-			Window.nameInputForPlayer(i + 1);
+		for (int i = 1; i < Game.players.length; i++) {
+			Window.nameInputForPlayer(i);
 			Game.players[i].name = Helper.getStr();
 			if (i < Vocab.PlayerIcon.length) {
 				Game.players[i].icon = Vocab.PlayerIcon[i];
@@ -69,7 +58,38 @@ public class Monopoly {
 		System.arraycopy(Game.map.route, 0, Game.mapWithInfo.route, 0, Game.map.route.length);
 	}
 	
+	public static void menuSelection() {
+		switch (Helper.getInt(0, Vocab.Command.length - 1)) {
+		case 0: // show map with info
+			Game.mapWithInfo.update();
+			Game.mapWithInfo.addPlayersInfo();
+			Game.mapWithInfo.show(); 
+			break;
+		case 1: // show original map
+			Game.map.show(); 
+			break;
+		case 2:
+			break;
+		case 3: // show barrier in 10 steps
+			Window.showBarrier(10);
+			break;
+		case 4: // show info of certain cell
+			Window.StepInputPrompt();
+			String str_step = Helper.getStr(); 
+			int step = 0;
+			try {
+				while (true) {
+					step = Integer.parseInt(str_step);
+					Window.showCellInfo(step);
+					Window.StepInputPrompt();
+					str_step = Helper.getStr(); 
+				}
+			} catch (NumberFormatException e) {
+			}			
+		}
+	}
+	
 	public static void switchPlayer() {
-		Game.currentPlayer = 1 - Game.currentPlayer;
+		Game.currentPlayer = 3 - Game.currentPlayer;
 	}
 }
