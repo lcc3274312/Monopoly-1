@@ -6,8 +6,8 @@ public class Player {
 	// attr_accessor
 	public String name = "noname", icon = "\u3000\u3000";
 	public int location = 0, direction = 1;
-	int cash = 5000, deposit = 0, coupon = 0, property = 0;
-	int totalAssets = 0; // totalAssets is counted every time when show
+	public int cash = 5000, deposit = 0, coupon = 0, property = 0;
+	public int totalAssets = 0; // totalAssets is counted every time when show
 	// define states
 	int unmovableRound = 0;
 	// define cells[] items[]

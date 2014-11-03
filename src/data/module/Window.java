@@ -55,8 +55,20 @@ public class Window {
 			System.out.printf("%-6s" + Game.mapWithInfo.route[location].price + "\n", Vocab.CellInfoListHead[2]);
 			System.out.printf("%-6s" + Game.mapWithInfo.route[location].level + "\n", Vocab.CellInfoListHead[3]);
 			System.out.printf("%-7s" + Game.mapWithInfo.route[location].owner.name + "\n", Vocab.CellInfoListHead[4]);
+		}		
+	}
+	
+	public static void showPlayersInfo() {
+		System.out.print(Vocab.ShowPlayersInfoPrompt);
+		System.out.printf("%-10s%-6s%-6s%-6s%-6s%-6s\n", Vocab.PlayersInfoListHead[0], Vocab.PlayersInfoListHead[1], Vocab.PlayersInfoListHead[2], Vocab.PlayersInfoListHead[3], Vocab.PlayersInfoListHead[4], Vocab.PlayersInfoListHead[5]);
+		for (int i = 1; i < Game.players.length; i++) {
+			System.out.printf(" %-12s%-8d%-8d%-8d%-8d%-8d\n", Game.players[i].name, Game.players[i].coupon, Game.players[i].cash, Game.players[i].deposit, Game.players[i].property, Game.players[i].totalAssets);
 		}
-		
+
+	}
+	
+	public static void showEndGameWithWinOf(Player player) {
+		System.out.printf(Vocab.ShowEndGame, player.name);
 	}
 
 }

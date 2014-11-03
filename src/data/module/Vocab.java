@@ -74,8 +74,16 @@ public class Vocab {
 		"拥有者："
 	};
 	
+	// show players info
+	public static final String ShowPlayersInfoPrompt = "玩家资产信息如下：\n";
+	public static final String[] PlayersInfoListHead = {
+		"玩家名","点券","现金","存款","房产","资产总额"
+	};
+	
 	public static final String BarrierInfo = "前方第%d步处为路障，请注意。\n";
 	public static final String NoBarrierInfo = "前方%d步内没有路障。\n";
+	
+	public static final String ShowEndGame = "游戏结束！玩家%s取得了胜利！\n";
 	
 	public static final String InputError = "不可用的输入值！请重新输入：";
 }

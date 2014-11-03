@@ -11,8 +11,10 @@ public class Monopoly {
 //		Window.showCellInfo(5);
 	}
 	
+	static boolean endRound = false;
+	
 	private static void start() {
-		while (true) {                  // break if game finish
+		while (!endRound) {                  // break if game finish
 			Window.showDateInfo();
 			while (true) {              // break if one player finish
 				Window.showMenu();
@@ -85,11 +87,25 @@ public class Monopoly {
 					str_step = Helper.getStr(); 
 				}
 			} catch (NumberFormatException e) {
-			}			
+			}
+			break;
+		case 5: // show info of players
+			Window.showPlayersInfo();
+			break;
+		case 7: // admit fail
+			endGame();
 		}
+
 	}
 	
 	public static void switchPlayer() {
 		Game.currentPlayer = 3 - Game.currentPlayer;
+	}
+	
+	public static void endGame() {
+		switchPlayer();
+		Window.showEndGameWithWinOf(Game.players[Game.currentPlayer]);
+		//Helper.getStr();
+		System.exit(0);
 	}
 }
