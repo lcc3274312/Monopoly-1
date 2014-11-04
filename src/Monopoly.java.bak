@@ -91,47 +91,40 @@ public class Monopoly {
 		Game.mapWithInfo.update();
 		Game.mapWithInfo.addPlayersInfo();
 		Game.mapWithInfo.show(); 
-		Helper.getEnter();
 	}
 	
 	private static void showMap() {
 		Game.map.show(); 
-		Helper.getEnter();
 	}
 	
 	private static void showBarrierIn10Steps() {
 		Window.showBarrier(10);
-		Helper.getEnter();
 	}
 	
 	private static void showInfoOfCertainCell() {
-		String str_deltaStep = ""; 
+		Window.StepInputPrompt();
+		String str_deltaStep = Helper.getStr(); 
 		int deltaStep = 0;
 		try {
 			while (true) {
-				Window.StepInputPrompt();
-				str_deltaStep = Helper.getStr(); 
 				deltaStep = Integer.parseInt(str_deltaStep);
 				Window.showCellInfo(deltaStep);
+				Window.StepInputPrompt();
+				str_deltaStep = Helper.getStr(); 
 			}
 		} catch (NumberFormatException e) {
-			System.out.println();
 		}
 	}
 	
 	private static void showPlayersInfo() {
 		Window.showPlayersInfo();
-		Helper.getEnter();
 	}
 	
 	private static void diceAndGo() {
 		int step = dice();
 		Window.showDiceInfo(step);
-		// need to rewrite
-		//Game.players[Game.currentPlayer].location += step * Game.players[Game.currentPlayer].direction;
-		//Game.players[Game.currentPlayer].location = Helper.ensure(Game.players[Game.currentPlayer].location);
-		Game.players[Game.currentPlayer].move(step);
-		Helper.getEnter();
+		Game.players[Game.currentPlayer].location += step * Game.players[Game.currentPlayer].direction;
+		Game.players[Game.currentPlayer].location = Helper.ensure(Game.players[Game.currentPlayer].location);
 		showMapWithInfo();
 		caseLocation();
 		switchPlayer();
@@ -143,10 +136,7 @@ public class Monopoly {
 	
 	
 	private static void caseLocation() {
-		switch (Game.mapWithInfo.route[Game.players[Game.currentPlayer].location].type) {
-		case 0:
-		case 6:
-		}
+		// TODO Auto-generated method stub
 		
 	}
 
@@ -155,8 +145,6 @@ public class Monopoly {
 		return Helper.rand(6) + 1; 
 	}
 	
-	/** Switch player
-	 *  rewrite it if you change the player number */
 	private static void switchPlayer() {
 		Game.currentPlayer = 3 - Game.currentPlayer;
 	}
@@ -164,7 +152,7 @@ public class Monopoly {
 	public static void endGame() {
 		switchPlayer();
 		Window.showEndGameWithWinOf(Game.players[Game.currentPlayer]);
-		Helper.getEnter();
+		//Helper.getStr();
 		System.exit(0);
 	}
 }

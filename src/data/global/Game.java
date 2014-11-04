@@ -1,5 +1,12 @@
 package data.global;
 
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import data.module.*;
 import data.object.*;
 
@@ -28,4 +35,11 @@ public class Game {
 			mapWithInfo.route[i] = new Cell();
 		}
 	}
+	
+	// Create date info
+	public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	public static DateFormat dateShowFormat = new SimpleDateFormat(Vocab.DateShowFormat);
+    public static Date date ;//= dateFormat.parse("2014-01-01");
+  	public static Calendar dateCalendar = Calendar.getInstance();
+
 }

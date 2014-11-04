@@ -1,5 +1,6 @@
 package data.module;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import data.object.Map;
@@ -52,5 +53,12 @@ public class Helper {
 	public static String getStr() {
 		Scanner input =  new Scanner(System.in);
 		return input.next();
+	}
+	
+	public static void getEnter() {
+		try {  
+			System.in.read();                          
+        } catch(IOException e){   
+        }  
 	}
 }

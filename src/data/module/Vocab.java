@@ -8,7 +8,7 @@ public class Vocab {
 	public static final String MapRegeneratePrompt = "输入r重新生成地图，其余任意键接受地图";
 	
 	/** Date output */
-	public static final String DateInfo = "今天是2014年%d月%d日\n";
+	public static final String DateShowFormat = "今天是yyyy年MM月dd日\n";
 	
 	/** Menu */
 	public static final String CurrentPlayerInfo = "现在是%s的操作时间，您的前进方向是%s。\n";
@@ -29,6 +29,7 @@ public class Vocab {
 		"○\u3000",   // player 1
 		"□\u3000"    // player 2
 	};
+	public static final String AvailableCell = "<可供出售>";
 	
 	/** Cell icon */
 	public static final String[] CellIcon = {
@@ -83,7 +84,10 @@ public class Vocab {
 	public static final String BarrierInfo = "前方第%d步处为路障，请注意。\n";
 	public static final String NoBarrierInfo = "前方%d步内没有路障。\n";
 	
+	public static final String DiceInfo = "你掷得的点数为%d\n";
+	
 	public static final String ShowEndGame = "游戏结束！玩家%s取得了胜利！\n";
 	
 	public static final String InputError = "不可用的输入值！请重新输入：";
+	public static final String LackOfCashError = "您当前的现金不足！\n";
 }

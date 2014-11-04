@@ -18,7 +18,7 @@ public class Window {
 	}
 	
 	public static void showDateInfo() {
-		System.out.printf(Vocab.DateInfo,1,1);
+		System.out.print(Game.dateShowFormat.format(Game.date));
 	}
 	
 	public static void showMenu() {
@@ -55,7 +55,8 @@ public class Window {
 			System.out.printf("%-6s" + Game.mapWithInfo.route[location].price + "\n", Vocab.CellInfoListHead[2]);
 			System.out.printf("%-6s" + Game.mapWithInfo.route[location].level + "\n", Vocab.CellInfoListHead[3]);
 			System.out.printf("%-7s" + Game.mapWithInfo.route[location].owner.name + "\n", Vocab.CellInfoListHead[4]);
-		}		
+		}	
+		System.out.println();
 	}
 	
 	public static void showPlayersInfo() {
@@ -64,7 +65,10 @@ public class Window {
 		for (int i = 1; i < Game.players.length; i++) {
 			System.out.printf(" %-12s%-8d%-8d%-8d%-8d%-8d\n", Game.players[i].name, Game.players[i].coupon, Game.players[i].cash, Game.players[i].deposit, Game.players[i].property, Game.players[i].totalAssets);
 		}
-
+	}
+	
+	public static void showDiceInfo(int diceStep) {
+		System.out.printf(Vocab.DiceInfo, diceStep);
 	}
 	
 	public static void showEndGameWithWinOf(Player player) {

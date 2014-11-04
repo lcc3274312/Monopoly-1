@@ -8,7 +8,7 @@ import data.module.Window;
 public class Map {
 	// attr_accessor
 	public static final int WIDTH = 20, HEIGHT = 10;
-	public static int length = 56;
+	public static int length = 56; // Design to accept user's DIY map
 	
 	public String[][] image = new String[WIDTH][HEIGHT];
 	public Cell[] route = new Cell[length];
@@ -143,6 +143,7 @@ public class Map {
 			for (int j = 0; j < randStMaxNo; j++) {
 				route[step].street = street;
 				route[step].streetNo = j + 1;
+				route[step].price = randPrice();
 				step++;
 			}
 			street++;
@@ -159,6 +160,7 @@ public class Map {
 			for (int j = 0; j < (10 - randStMaxNo); j++) {
 				route[step].street = street;
 				route[step].streetNo = j + 1;
+				route[step].price = randPrice();
 				step++;
 			}
 			street++;
@@ -194,7 +196,7 @@ public class Map {
 	
 	/** Add players' icon on mapWithInfo */
 	public void addPlayersInfo() {
-		for (int i = 0; i < Game.players.length; i++) {
+		for (int i = 1; i < Game.players.length; i++) {
 			if ( i != Game.currentPlayer) {
 				image[route[Game.players[i].location].x][route[Game.players[i].location].y] = Vocab.PlayerIcon[i];
 			}
@@ -203,5 +205,7 @@ public class Map {
 		image[route[Game.players[Game.currentPlayer].location].x][route[Game.players[Game.currentPlayer].location].y] = Vocab.PlayerIcon[Game.currentPlayer];
 	}
 	
-
+	private int randPrice() {
+		return 100 * (Helper.rand(13) + 8);
+	}
 }
