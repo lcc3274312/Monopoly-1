@@ -11,10 +11,10 @@ public class Player {
 	public int cash = 5000, deposit = 0, coupon = 0, property = 0;
 	public int totalAssets = 0; // totalAssets is counted every time when show
 	// define states
-	int slowRound = 0, fineFreeRound = 0, cellRobRound = 0;
+	public int slowRound = 0, fineFreeRound = 0, cellRobRound = 0;
 	// define cells[] items[]
-	boolean[] cells = new boolean[Map.length];
-	int[] items = new int[Item.ItemNum];
+	public boolean[] cells = new boolean[Map.length];
+	public int[] items = new int[Item.ItemNum];
 	
 	// def initialize
 	public Player() {
@@ -47,7 +47,7 @@ public class Player {
 		if (cash >= Game.mapWithInfo.route[location].price * Game.mapWithInfo.route[location].level) {
 			cash -= Game.mapWithInfo.route[location].price * Game.mapWithInfo.route[location].level;
 			cells[location] = true;
-			Game.mapWithInfo.route[location].owner = Game.players[Game.currentPlayer];
+			Game.mapWithInfo.route[location].owner = Game.currentPlayer;
 			Game.mapWithInfo.route[location].icon = Vocab.CellIcon[6 + Game.currentPlayer];
 		} else {
 			System.out.print(Vocab.LackOfCashError);
@@ -56,7 +56,7 @@ public class Player {
 	
 	// def private method
 	/** One step and deal with sth */
-	void step() {
+	private void step() {
 		location += direction;
 		location = Helper.ensure(location);
 	}

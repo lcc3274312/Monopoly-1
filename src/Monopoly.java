@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.text.ParseException;
 
 import data.object.*;
@@ -8,14 +9,22 @@ public class Monopoly {
 	
 	public static void main(String[] args) {
 		Window.showGreeting();
-		initialize();
-		start();
+		switch (Helper.getStr()) {
+		case "x": System.exit(0); break;
+		case "s": load(); break;
+		default: initialize();
+		}
+		setTime();
+		start();  
+		
 	}
 	
+
+
 	static boolean endRound = false;
 	
 	private static void start() {
-		while (true) {
+		while (true) {   //需要修改 读档时从读档时的玩家开始
 			for (int i = 1; i < Game.players.length; i++) {   // one round
 				endRound = false;
 				while (!endRound) {          // break if one player finish
@@ -37,7 +46,6 @@ public class Monopoly {
 	public static void initialize() {
 		setPlayers();
 		setMap();
-		setTime();
 	}
 	
 	/** Enable user to set player's name and give an icon */
@@ -66,7 +74,7 @@ public class Monopoly {
 	
 	public static void setTime() {
   		try {
-  			Game.date = Game.dateFormat.parse("2014-01-01");
+  			Game.date = Game.dateFormat.parse(Time.nowStr);
   		    Game.dateCalendar.setTime(Game.date);
   		} catch (ParseException e) {
   		}
@@ -81,11 +89,14 @@ public class Monopoly {
 		case 4: showInfoOfCertainCell(); break;
 		case 5: showPlayersInfo();       break;
 		case 6: diceAndGo();             break;
-		case 7: endGame();
+		case 7: save();					 break;
+		case 8: endGame();
 		}
 
 	}
 	
+
+
 	// Selection methods
 	private static void showMapWithInfo() {
 		Game.mapWithInfo.update();
@@ -109,7 +120,7 @@ public class Monopoly {
 		int deltaStep = 0;
 		try {
 			while (true) {
-				Window.StepInputPrompt();
+				Window.stepInputPrompt();
 				str_deltaStep = Helper.getStr(); 
 				deltaStep = Integer.parseInt(str_deltaStep);
 				Window.showCellInfo(deltaStep);
@@ -138,6 +149,23 @@ public class Monopoly {
 		endRound = true;
 	}
 	
+	private static void save() {
+		try {
+			Game.save();
+		} catch (IOException e) {
+			System.out.print(Vocab.UnknownSaveError);
+		}	
+	}
+
+	private static void load() {
+		try {
+			Game.load();
+		} catch (IOException e) {
+			System.out.print(Vocab.UnknownLoadError);
+			Helper.getEnter();
+			System.exit(0);
+		}	
+	}
 	//==============================
 
 	

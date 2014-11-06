@@ -1,6 +1,9 @@
 package data.module;
 
 public class Vocab {
+	
+	public static final String Greeting = "欢迎来到大富翁的世界！\n按s读取存档，按x结束游戏，其余按键开始游戏。\n";
+	
 	/** Name input prompt */
 	public static final String NameInputPrompt = "请设定角色%d的名字：";
 	
@@ -20,6 +23,7 @@ public class Vocab {
 		"查看前后指定步数的具体信息",
 		"查看玩家的资产信息",
 		"心满意足扔骰子",
+		"存档",
 		"认输"
 	};
 	
@@ -90,4 +94,8 @@ public class Vocab {
 	
 	public static final String InputError = "不可用的输入值！请重新输入：";
 	public static final String LackOfCashError = "您当前的现金不足！\n";
+	public static final String LackOfDepositError = "您当前的存款不足！\n";
+	public static final String NoSavesError = "找不到存档！游戏将从头开始。\n";
+	public static final String UnknownSaveError = "存档时遇到未知错误！游戏将继续进行。\n";
+	public static final String UnknownLoadError = "读档时遇到未知错误！游戏将退出。\n我猜你多半是想改存档作弊~";
 }

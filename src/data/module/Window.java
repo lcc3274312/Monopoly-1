@@ -6,7 +6,7 @@ import data.object.*;
 public class Window {
 	
 	public static void showGreeting() {
-		//String a = Vocab.DateInfo;
+		System.out.print(Vocab.Greeting);
 	}
 	
 	public static void nameInputForPlayer(int index) {
@@ -43,7 +43,7 @@ public class Window {
 		}
 	}
 	
-	public static void StepInputPrompt() {
+	public static void stepInputPrompt() {
 		System.out.print(Vocab.StepInputPrompt);
 	}
 	
@@ -54,7 +54,7 @@ public class Window {
 			System.out.printf("%-8s" + Vocab.StreetName[Game.mapWithInfo.route[location].street], Vocab.CellInfoListHead[1], Game.mapWithInfo.route[location].streetNo);
 			System.out.printf("%-6s" + Game.mapWithInfo.route[location].price + "\n", Vocab.CellInfoListHead[2]);
 			System.out.printf("%-6s" + Game.mapWithInfo.route[location].level + "\n", Vocab.CellInfoListHead[3]);
-			System.out.printf("%-7s" + Game.mapWithInfo.route[location].owner.name + "\n", Vocab.CellInfoListHead[4]);
+			System.out.printf("%-7s" + Game.players[Game.mapWithInfo.route[location].owner].name + "\n", Vocab.CellInfoListHead[4]);
 		}	
 		System.out.println();
 	}
