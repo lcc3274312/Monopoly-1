@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.text.ParseException;
-
 import data.object.*;
 import data.module.*;
 import data.global.*;
@@ -16,17 +15,18 @@ public class Monopoly {
 		}
 		setTime();
 		start();  
-		
 	}
 	
 
-
+	static boolean afterLoad = false;
 	static boolean endRound = false;
 	
 	private static void start() {
-		while (true) {   //需要修改 读档时从读档时的玩家开始
-			for (int i = 1; i < Game.players.length; i++) {   // one round
-				endRound = false;
+		// after load, run remaining round
+		while (true) {   
+			for (int i = (afterLoad ? Game.currentPlayer : 1); i < Game.players.length; i++) {   // one round
+				endRound = false; 
+				afterLoad = false;
 				while (!endRound) {          // break if one player finish
 					Window.showDateInfo();
 					Window.showMenu();
@@ -94,8 +94,6 @@ public class Monopoly {
 		}
 
 	}
-	
-
 
 	// Selection methods
 	private static void showMapWithInfo() {
@@ -138,9 +136,6 @@ public class Monopoly {
 	private static void diceAndGo() {
 		int step = dice();
 		Window.showDiceInfo(step);
-		// need to rewrite
-		//Game.players[Game.currentPlayer].location += step * Game.players[Game.currentPlayer].direction;
-		//Game.players[Game.currentPlayer].location = Helper.ensure(Game.players[Game.currentPlayer].location);
 		Game.players[Game.currentPlayer].move(step);
 		Helper.getEnter();
 		showMapWithInfo();
@@ -153,29 +148,54 @@ public class Monopoly {
 		try {
 			Game.save();
 		} catch (IOException e) {
-			System.out.print(Vocab.UnknownSaveError);
+			Window.showErrorInfo(Vocab.UnknownSaveError);
 		}	
 	}
 
 	private static void load() {
 		try {
 			Game.load();
+			afterLoad = true;
 		} catch (IOException e) {
-			System.out.print(Vocab.UnknownLoadError);
+			Window.showErrorInfo(Vocab.UnknownLoadError);
 			Helper.getEnter();
 			System.exit(0);
 		}	
 	}
 	//==============================
-
-	
 	
 	private static void caseLocation() {
 		switch (Game.mapWithInfo.route[Game.players[Game.currentPlayer].location].type) {
-		case 0:
-		case 6:
+		case 0: fieldDeal(); break;
+		case 6: getCoupon(); break;
 		}
 		
+	}
+
+	private static void fieldDeal() {
+		Window.showCellInfo(0);
+		if (Game.mapWithInfo.route[Game.players[Game.currentPlayer].location].owner == 0) {
+			Window.buyPrompt();
+			switch (Helper.getInt(0, 1)) {
+			case 1: Game.players[Game.currentPlayer].buy();break;
+			case 0:
+			}
+		} else if (Game.mapWithInfo.route[Game.players[Game.currentPlayer].location].level < Cell.MAX_LEVEL && Game.mapWithInfo.route[Game.players[Game.currentPlayer].location].owner == Game.currentPlayer) {
+			Window.levelUpPrompt();
+			switch (Helper.getInt(0, 1)) {
+			case 1: Game.players[Game.currentPlayer].levelUp();break;
+			case 0:
+			}
+		} else {
+			Game.players[Game.currentPlayer].fined();
+		}
+		
+	}
+
+
+	private static void getCoupon() {
+		int randCoupon = Helper.rand(5) * 10 + 10;
+		Game.players[Game.currentPlayer].getCoupon(randCoupon);
 	}
 
 

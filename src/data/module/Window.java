@@ -47,13 +47,21 @@ public class Window {
 		System.out.print(Vocab.StepInputPrompt);
 	}
 	
+	public static void buyPrompt() {
+		System.out.print(Vocab.buyPrompt);
+	}
+	
+	public static void levelUpPrompt() {
+		System.out.print(Vocab.levelUpPrompt);
+	}
+	
 	public static void showCellInfo(int step) {      // step > 0 => anti clock direction
 		int location = Helper.ensure(Game.players[Game.currentPlayer].location + step);
 		System.out.printf("%-8s" + Vocab.CellTypeName[Game.mapWithInfo.route[location].type], Vocab.CellInfoListHead[0]);
 		if (Game.mapWithInfo.route[location].type == 0) {
 			System.out.printf("%-8s" + Vocab.StreetName[Game.mapWithInfo.route[location].street], Vocab.CellInfoListHead[1], Game.mapWithInfo.route[location].streetNo);
 			System.out.printf("%-6s" + Game.mapWithInfo.route[location].price + "\n", Vocab.CellInfoListHead[2]);
-			System.out.printf("%-6s" + Game.mapWithInfo.route[location].level + "\n", Vocab.CellInfoListHead[3]);
+			System.out.printf("%-6s" + Game.mapWithInfo.route[location].level + "/" + Cell.MAX_LEVEL + "\n", Vocab.CellInfoListHead[3]);
 			System.out.printf("%-7s" + Game.players[Game.mapWithInfo.route[location].owner].name + "\n", Vocab.CellInfoListHead[4]);
 		}	
 		System.out.println();
@@ -74,5 +82,16 @@ public class Window {
 	public static void showEndGameWithWinOf(Player player) {
 		System.out.printf(Vocab.ShowEndGame, player.name);
 	}
-
+	
+	public static void showGetInfo(String item) {
+		System.out.printf(Vocab.GetInfo, item);
+	}
+	
+	public static void showFinedInfo(int cash, String targetPlayer) {
+		System.out.printf(Vocab.FinedInfo, cash, targetPlayer);
+	}
+	
+	public static void showErrorInfo(String error) {
+		System.out.print(error);
+	}
 }

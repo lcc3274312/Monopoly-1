@@ -3,6 +3,7 @@ package data.object;
 import data.global.Game;
 import data.module.Helper;
 import data.module.Vocab;
+import data.module.Window;
 
 public class Player {
 	// attr_accessor
@@ -42,7 +43,7 @@ public class Player {
 		
 	}
 	
-	public void buy(int location) {   // only can buy cell at your current location
+	public void buy() {   // only can buy cell at your current location
 		// by default location always equals to players[cplayer].location
 		if (cash >= Game.mapWithInfo.route[location].price * Game.mapWithInfo.route[location].level) {
 			cash -= Game.mapWithInfo.route[location].price * Game.mapWithInfo.route[location].level;
@@ -50,8 +51,31 @@ public class Player {
 			Game.mapWithInfo.route[location].owner = Game.currentPlayer;
 			Game.mapWithInfo.route[location].icon = Vocab.CellIcon[6 + Game.currentPlayer];
 		} else {
-			System.out.print(Vocab.LackOfCashError);
+			Window.showErrorInfo(Vocab.LackOfCashError);
 		}
+	}
+	
+	public void levelUp() {
+		if (cash >= Game.mapWithInfo.route[location].price / 2) {
+			cash -= Game.mapWithInfo.route[location].price / 2;
+			Game.mapWithInfo.route[location].level += 1;
+		} else {
+			Window.showErrorInfo(Vocab.LackOfCashError);
+		}
+	}
+	
+	public void fined() {
+		
+	}
+	
+	public void getCash(int cashGet) {
+		cash += cashGet;
+		Window.showGetInfo(cashGet + Vocab.PlayersInfoListHead[2]);
+	}
+	
+	public void getCoupon(int couponGet) {
+		coupon += couponGet;
+		Window.showGetInfo(couponGet + Vocab.PlayersInfoListHead[1]);
 	}
 	
 	// def private method

@@ -92,10 +92,18 @@ public class Vocab {
 	
 	public static final String ShowEndGame = "游戏结束！玩家%s取得了胜利！\n";
 	
+	public static final String GetInfo = "你获得了%s.\n";
+	public static final String FinedInfo = "你缴纳了%d过路费给了玩家%s.\n";
+	
+	public static final String buyPrompt = "是否购买？（1-确定，0-取消）";
+	public static final String levelUpPrompt = "是否升级？（1-确定，0-取消）";
+	
 	public static final String InputError = "不可用的输入值！请重新输入：";
 	public static final String LackOfCashError = "您当前的现金不足！\n";
 	public static final String LackOfDepositError = "您当前的存款不足！\n";
 	public static final String NoSavesError = "找不到存档！游戏将从头开始。\n";
 	public static final String UnknownSaveError = "存档时遇到未知错误！游戏将继续进行。\n";
 	public static final String UnknownLoadError = "读档时遇到未知错误！游戏将退出。\n我猜你多半是想改存档作弊~";
+
+
 }

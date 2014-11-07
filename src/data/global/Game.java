@@ -151,7 +151,7 @@ public class Game {
   	 		Time.nowStr = saves.readUTF();
   	 		saves.close();
         } else { // saves do not exist
-        	System.out.print(Vocab.NoSavesError);
+        	Window.showErrorInfo(Vocab.NoSavesError);
         	Helper.getEnter();
         	System.exit(0);
         }
