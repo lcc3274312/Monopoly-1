@@ -71,6 +71,7 @@ public class Window {
 		System.out.print(Vocab.ShowPlayersInfoPrompt);
 		System.out.printf("%-10s%-6s%-6s%-6s%-6s%-6s\n", Vocab.PlayersInfoListHead[0], Vocab.PlayersInfoListHead[1], Vocab.PlayersInfoListHead[2], Vocab.PlayersInfoListHead[3], Vocab.PlayersInfoListHead[4], Vocab.PlayersInfoListHead[5]);
 		for (int i = 1; i < Game.players.length; i++) {
+			Game.players[i].calTotalAssets();
 			System.out.printf(" %-12s%-8d%-8d%-8d%-8d%-8d\n", Game.players[i].name, Game.players[i].coupon, Game.players[i].cash, Game.players[i].deposit, Game.players[i].property, Game.players[i].totalAssets);
 		}
 	}
@@ -83,13 +84,18 @@ public class Window {
 		System.out.printf(Vocab.ShowEndGame, player.name);
 	}
 	
+	// item can be 500 + vocab.xxx[x]xianjin
 	public static void showGetInfo(String item) {
 		System.out.printf(Vocab.GetInfo, item);
 	}
 	
-	public static void showFinedInfo(int cash, String targetPlayer) {
-		System.out.printf(Vocab.FinedInfo, cash, targetPlayer);
+	public static void showLossInfo(int type, int amount) {
+		System.out.printf(Vocab.LossInfo, amount, Vocab.PlayersInfoListHead[type]);
 	}
+	
+//	public static void showFinedInfo(int fine, String targetPlayer) {
+//		System.out.printf(Vocab.FinedInfo, fine, targetPlayer);
+//	}
 	
 	public static void showErrorInfo(String error) {
 		System.out.print(error);

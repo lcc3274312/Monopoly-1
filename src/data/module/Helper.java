@@ -14,7 +14,7 @@ public class Helper {
 	
 	/** Correct the location when !0<=location<MAX_STEP */
 	public static int ensure(int location) {
-		while (location > Map.length) {
+		while (location >= Map.length) {
 			location -= Map.length;
 		} 
 		while (location < 0) {

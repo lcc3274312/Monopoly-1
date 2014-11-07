@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.text.ParseException;
+
 import data.object.*;
 import data.module.*;
 import data.global.*;
@@ -177,17 +178,21 @@ public class Monopoly {
 		if (Game.mapWithInfo.route[Game.players[Game.currentPlayer].location].owner == 0) {
 			Window.buyPrompt();
 			switch (Helper.getInt(0, 1)) {
-			case 1: Game.players[Game.currentPlayer].buy();break;
+			case 1: Game.players[Game.currentPlayer].buy();
 			case 0:
 			}
 		} else if (Game.mapWithInfo.route[Game.players[Game.currentPlayer].location].level < Cell.MAX_LEVEL && Game.mapWithInfo.route[Game.players[Game.currentPlayer].location].owner == Game.currentPlayer) {
 			Window.levelUpPrompt();
 			switch (Helper.getInt(0, 1)) {
-			case 1: Game.players[Game.currentPlayer].levelUp();break;
+			case 1: Game.players[Game.currentPlayer].levelUp();
 			case 0:
 			}
 		} else {
-			Game.players[Game.currentPlayer].fined();
+			if (Game.players[Game.currentPlayer].fineFreeRound > 0) {
+				Game.players[Game.currentPlayer].fineFreeRound--;
+			} else {
+				Game.players[Game.currentPlayer].fined();
+			}
 		}
 		
 	}

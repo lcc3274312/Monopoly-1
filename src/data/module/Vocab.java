@@ -93,6 +93,7 @@ public class Vocab {
 	public static final String ShowEndGame = "游戏结束！玩家%s取得了胜利！\n";
 	
 	public static final String GetInfo = "你获得了%s.\n";
+	public static final String LossInfo = "你损失了%d%s.\n";
 	public static final String FinedInfo = "你缴纳了%d过路费给了玩家%s.\n";
 	
 	public static final String buyPrompt = "是否购买？（1-确定，0-取消）";

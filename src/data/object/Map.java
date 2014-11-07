@@ -190,6 +190,7 @@ public class Map {
 	 * For mapWithInfo, use every time to show.(Info is changing.) */
 	public void update() {
 		for (int i = 0; i < route.length; i++) {
+			//route[i].icon = Vocab.CellIcon[6 + route[i].owner];
 			image[route[i].x][route[i].y] = route[i].icon;
 		}
 	}
