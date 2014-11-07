@@ -33,7 +33,7 @@ public class Player {
 			}
 			// whether bank
 			if (Game.mapWithInfo.route[location].type == 2) {
-				//bank
+				Game.bank.greeting();
 			}
 		}
 	}

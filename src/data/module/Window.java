@@ -97,6 +97,10 @@ public class Window {
 //		System.out.printf(Vocab.FinedInfo, fine, targetPlayer);
 //	}
 	
+	public static void showCellGreeting(int type) {
+		System.out.printf(Vocab.CellGreeting,Vocab.CellTypeName[type]);
+	}
+	
 	public static void showErrorInfo(String error) {
 		System.out.print(error);
 	}

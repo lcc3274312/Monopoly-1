@@ -99,6 +99,13 @@ public class Vocab {
 	public static final String buyPrompt = "是否购买？（1-确定，0-取消）";
 	public static final String levelUpPrompt = "是否升级？（1-确定，0-取消）";
 	
+	public static final String bankPrompt = "您当前的现金是%d，存款是%d.\n请选择操作？（0-存钱，1-取钱，2-退出.）";
+	public static final String bankSavePrompt = "请输入想要存入的金额：";
+	public static final String bankGetPrompt = "请输入想要取出的金额：";
+	
+	public static final String CellGreeting = "欢迎来到%s";
+	
+	public static final String NoError = "操作成功！\n";
 	public static final String InputError = "不可用的输入值！请重新输入：";
 	public static final String LackOfCashError = "您当前的现金不足！\n";
 	public static final String LackOfDepositError = "您当前的存款不足！\n";

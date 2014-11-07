@@ -36,7 +36,7 @@ public class Monopoly {
 			}	
 			Time.nextDay();
 			if (Time.endOfMonth()) {
-				// fa li xi
+				Game.bank.interest();
 			}
 		}
 	}

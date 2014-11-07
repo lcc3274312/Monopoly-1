@@ -18,12 +18,5 @@ public class Cell {
 	// def initialize
 	public Cell() {
 	}
-	
-	// def method
-	/** player raise the level of this cell */
-	void levelUp() {
-		
-	}
-
 
 }

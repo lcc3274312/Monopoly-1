@@ -1,14 +1,57 @@
 package data.object;
 
+import data.global.Game;
+import data.module.*;
+
 public class Bank {
 	
-	public static void greeting() {
+	public void greeting() {
+		Window.showCellGreeting(2);
+		boolean flag = true;
+		while (flag) {
+			System.out.printf(Vocab.bankPrompt, Game.players[Game.currentPlayer].cash, Game.players[Game.currentPlayer].deposit);
+			switch (Helper.getInt(0,2)) {
+			case 0: save(); break;
+			case 1: get();  break;
+			case 2: flag = false;
+			}	
+		}
 		
 	}
 	
-	public static void save(int cash) {
-		
+	public void save() {
+		while (true) {
+			System.out.print(Vocab.bankSavePrompt);
+			int n = Helper.getInt(0,2147483647);
+			if (n <= Game.players[Game.currentPlayer].cash) {
+				Game.players[Game.currentPlayer].cash -= n;
+				Game.players[Game.currentPlayer].deposit += n;
+				Window.showErrorInfo(Vocab.NoError);
+				break;
+			} else {
+				Window.showErrorInfo(Vocab.LackOfCashError);
+			}
+		}
 	}
 
+	public void get() {
+		while (true) {
+			System.out.print(Vocab.bankGetPrompt);
+			int n = Helper.getInt(0,2147483647);
+			if (n <= Game.players[Game.currentPlayer].deposit) {
+				Game.players[Game.currentPlayer].cash += n;
+				Game.players[Game.currentPlayer].deposit -= n;
+				Window.showErrorInfo(Vocab.NoError);
+				break;
+			} else {
+				Window.showErrorInfo(Vocab.LackOfDepositError);
+			}
+		}
+	}
 	
+	public void interest() {
+		int interest = Game.players[Game.currentPlayer].deposit / 10;
+		Game.players[Game.currentPlayer].deposit += interest;
+		Window.showGetInfo(interest + Vocab.PlayersInfoListHead[3] + "ÀûÏ¢");
+	}
 }
