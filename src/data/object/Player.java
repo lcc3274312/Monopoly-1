@@ -12,10 +12,10 @@ public class Player {
 	public int cash = 5000, deposit = 0, coupon = 0, property = 0;
 	public int totalAssets = 0; // totalAssets is counted every time when show
 	// define states
-	public int slowRound = 0, fineFreeRound = 0, cellRobRound = 0;
+	public int slowRound = 0, fineFreeRound = 0;//, cellRobRound = 0;
 	// define cells[] items[]
 	public boolean[] cells = new boolean[Map.length];
-	public int[] items = new int[Item.ItemNum];
+	public int[] items = {0,1,2,3,4,5,6,7,8,9,10};//new int[Item.ItemNum];
 	
 	// def initialize
 	public Player() {
@@ -27,20 +27,26 @@ public class Player {
 		// whether player can move?
 		for (int i = 0; i < step; i++) {
 			step();
-			// whether player is blocked by barrier
-			if (Game.mapWithInfo.route[location].isBarrier) {
-				break;// show info 
-			}
 			// whether bank
 			if (Game.mapWithInfo.route[location].type == 2) {
 				Game.bank.greeting();
+			}
+			// whether player is blocked by barrier
+			if (Game.mapWithInfo.route[location].isBarrier) {
+				Window.showBarrierBlock();
+				Game.mapWithInfo.route[location].isBarrier = false;
+				break;
 			}
 		}
 	}
 	
 	/** Use items */
-	void useItem(int index) {
-		
+	public void useItem(int index) {
+		if (items[index] > 0) {
+			new Item(index);
+		} else {
+			Window.showErrorInfo(Vocab.LackOfItemError);
+		}
 	}
 	
 	public void buy() {   // only can buy cell at your current location
@@ -51,6 +57,7 @@ public class Player {
 			Game.mapWithInfo.route[location].owner = Game.currentPlayer;
 			Game.mapWithInfo.route[location].icon = Vocab.CellIcon[6 + Game.currentPlayer];
 			property += Game.mapWithInfo.route[location].price;
+			Window.showErrorInfo(Vocab.NoError);
 		} else {
 			Window.showErrorInfo(Vocab.LackOfCashError);
 		}
@@ -81,18 +88,18 @@ public class Player {
 		// fine
 		if (cash >= fine) {
 			cash -= fine;
-			Window.showLossInfo(2, fine);
+			Window.showLossInfo(Game.currentPlayer, 2, fine);
 		} else {  // cash not enough
 			fineRemaining = fine - cash;
-			Window.showLossInfo(2, cash);
+			Window.showLossInfo(Game.currentPlayer, 2, cash);
 			cash = 0;
 			// fine deposit
 			if (deposit >= fineRemaining) {
 				deposit -= fineRemaining;
-				Window.showLossInfo(3, fineRemaining);
+				Window.showLossInfo(Game.currentPlayer, 3, fineRemaining);
 			} else {  // deposit not enough
 				fineRemaining -= deposit;
-				Window.showLossInfo(3, deposit);
+				Window.showLossInfo(Game.currentPlayer, 3, deposit);
 				deposit = 0;
 				// fine property
 				int value = 0;
@@ -107,7 +114,7 @@ public class Player {
 						property -= value;
 						if (value >= fineRemaining) {
 							cash += value - fineRemaining;
-							Window.showLossInfo(4, Game.mapWithInfo.route[i].street); // need +
+							Window.showLossInfo(Game.currentPlayer, 4, Game.mapWithInfo.route[i].street); // need +
 							isFailed = false;
 							break;
 						} else {
@@ -123,21 +130,27 @@ public class Player {
 			}
 		}
 		Game.players[3 - Game.currentPlayer].cash += fine;
-		Window.showGetInfo(fine + Vocab.PlayersInfoListHead[2]);
+		// need rewrite
+		Window.showGetInfo(3 - Game.currentPlayer, fine + Vocab.PlayersInfoListHead[2]);
 	}
 	
 	public void getCash(int cashGet) {
 		cash += cashGet;
-		Window.showGetInfo(cashGet + Vocab.PlayersInfoListHead[2]);
+		Window.showGetInfo(Game.currentPlayer, cashGet + Vocab.PlayersInfoListHead[2]);
 	}
 	
 	public void getCoupon(int couponGet) {
 		coupon += couponGet;
-		Window.showGetInfo(couponGet + Vocab.PlayersInfoListHead[1]);
+		Window.showGetInfo(Game.currentPlayer, couponGet + Vocab.PlayersInfoListHead[1]);
+	}
+	
+	public void getItem(int itemGet) {
+		items[itemGet] += 1;
+		Window.showGetInfo(Game.currentPlayer,Vocab.ItemName[itemGet]);
 	}
 	
 	public void calTotalAssets() {
-		totalAssets = cash + deposit + coupon + property;
+		totalAssets = cash + deposit + property;
 	}
 	
 	// def private method

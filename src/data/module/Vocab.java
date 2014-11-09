@@ -92,9 +92,13 @@ public class Vocab {
 	
 	public static final String ShowEndGame = "游戏结束！玩家%s取得了胜利！\n";
 	
-	public static final String GetInfo = "你获得了%s.\n";
-	public static final String LossInfo = "你损失了%d%s.\n";
-	public static final String FinedInfo = "你缴纳了%d过路费给了玩家%s.\n";
+	public static final String GetInfo = "玩家%s获得了%s.\n";
+	public static final String LossInfo = "玩家%s损失了%d%s.\n";
+	
+	public static final String LotteryInfo = "你来到了彩票点。\n恭喜！你中了%s等奖！\n";
+	public static final String LotteryMissInfo = "你来到了彩票点。\n很遗憾，你没有中奖。\n";
+	public static final String[] LotteryLV = {"","一","二","三"};
+	//public static final String FinedInfo = "你缴纳了%d过路费给了玩家%s.\n";
 	
 	public static final String buyPrompt = "是否购买？（1-确定，0-取消）";
 	public static final String levelUpPrompt = "是否升级？（1-确定，0-取消）";
@@ -103,12 +107,30 @@ public class Vocab {
 	public static final String bankSavePrompt = "请输入想要存入的金额：";
 	public static final String bankGetPrompt = "请输入想要取出的金额：";
 	
+	public static final String[] News = {
+		"新闻：奖励土地价值最高者%s%d现金！\n",
+		"新闻：补助土地价值最低者%s%d现金！\n",
+		"新闻：银行加发储金红利，每个人得到存款10%！\n",
+		"新闻：所有人缴纳财产税，每个人扣除存款10%！\n",
+		"新闻：每个人得到一张卡片！\n"
+	};
+	
+	//public static final String ItemUseInfo = "玩家%s使用了%s.\n";
+	public static final String showItemBuyPrompt = "请选择你要买的道具，输入0退出！\n";
+	public static final String[] ItemName = {
+		"","转向卡","乌龟卡","路障","购地卡","查税卡","均富卡","拆迁卡","怪兽卡","财神卡","福神卡"
+	}; 
+	public static final String BarrierSetPrompt = "请选择相对你当前位置的放置位置（-8 ~ 8）：";
+	public static final String BarrierBlockInfo = "你遇到了路障！\n";
+	
 	public static final String CellGreeting = "欢迎来到%s";
 	
 	public static final String NoError = "操作成功！\n";
 	public static final String InputError = "不可用的输入值！请重新输入：";
 	public static final String LackOfCashError = "您当前的现金不足！\n";
 	public static final String LackOfDepositError = "您当前的存款不足！\n";
+	public static final String LackOfItemError = "您当前无此道具！\n";
+	public static final String IllegalItemUseError = "您无法在当前位置使用此道具！\n";
 	public static final String NoSavesError = "找不到存档！游戏将从头开始。\n";
 	public static final String UnknownSaveError = "存档时遇到未知错误！游戏将继续进行。\n";
 	public static final String UnknownLoadError = "读档时遇到未知错误！游戏将退出。\n我猜你多半是想改存档作弊~";

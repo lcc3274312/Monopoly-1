@@ -85,12 +85,57 @@ public class Window {
 	}
 	
 	// item can be 500 + vocab.xxx[x]xianjin
-	public static void showGetInfo(String item) {
-		System.out.printf(Vocab.GetInfo, item);
+	public static void showGetInfo(int player, String item) {
+		System.out.printf(Vocab.GetInfo,Game.players[player].name, item);
 	}
 	
-	public static void showLossInfo(int type, int amount) {
-		System.out.printf(Vocab.LossInfo, amount, Vocab.PlayersInfoListHead[type]);
+	public static void showLossInfo(int player, int type, int amount) {
+		System.out.printf(Vocab.LossInfo,Game.players[player].name, amount, Vocab.PlayersInfoListHead[type]);
+	}
+	
+	public static void showLotteryInfo(int lv) {
+		if (lv == 0) {
+			System.out.print(Vocab.LotteryMissInfo);
+		} else if (1 <= lv && lv <= 3) {
+			System.out.printf(Vocab.LotteryInfo, Vocab.LotteryLV[lv]);
+		}
+	}
+	
+	public static void showNewsReport(int n, int player, int cash) {
+		System.out.printf(Vocab.News[n], Game.players[player].name, cash);
+	}
+	
+	public static void showPlayerSelectList(boolean[] list) {
+		System.out.println("0 - 取消");
+		for (int i = 0; i < list.length; i++) {
+			if (list[i]) {
+				System.out.println(i + " - " + Game.players[i].name);
+			}
+		}
+	}
+	
+	public static void showItemSelectList(int[] list) {
+		System.out.println("0 - 取消");
+		for (int i = 0; i < list.length; i++) {
+			if (list[i] > 0) {
+				System.out.println(i + " - " + Vocab.ItemName[i] + "*" + list[i]);
+			}
+		}
+	}
+	
+	public static void showShopMenu() {
+		System.out.print(Vocab.showItemBuyPrompt);
+		for (int i = 1; i < Vocab.ItemName.length; i++) {
+			System.out.println(i + " - " + Vocab.ItemName[i]);
+		}
+	}
+	
+	public static void showBarrierSetPrompt() {
+		System.out.print(Vocab.BarrierSetPrompt);
+	}
+	
+	public static void showBarrierBlock() {
+		System.out.print(Vocab.BarrierBlockInfo);
 	}
 	
 //	public static void showFinedInfo(int fine, String targetPlayer) {

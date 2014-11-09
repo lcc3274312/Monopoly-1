@@ -86,7 +86,7 @@ public class Game {
  			saves.writeInt(players[i].totalAssets);
  			saves.writeInt(players[i].slowRound);
  			saves.writeInt(players[i].fineFreeRound);
- 			saves.writeInt(players[i].cellRobRound);
+ 			//saves.writeInt(players[i].cellRobRound);
  			for (int j = 0; j < players[i].cells.length; j++) {
  				saves.writeBoolean(players[i].cells[j]);
  			}
@@ -138,7 +138,7 @@ public class Game {
   	 			players[i].totalAssets = saves.readInt();
   	 			players[i].slowRound = saves.readInt();
   	 			players[i].fineFreeRound = saves.readInt();
-  	 			players[i].cellRobRound = saves.readInt();
+  	 			//players[i].cellRobRound = saves.readInt();
   	 			for (int j = 0; j < players[i].cells.length; j++) {
   	 				players[i].cells[j] = saves.readBoolean();
   	 			}

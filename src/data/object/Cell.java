@@ -1,6 +1,5 @@
 package data.object;
 
-import data.global.Game;
 import data.module.Vocab;
 
 

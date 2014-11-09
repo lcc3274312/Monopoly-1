@@ -49,9 +49,15 @@ public class Bank {
 		}
 	}
 	
-	public void interest() {
-		int interest = Game.players[Game.currentPlayer].deposit / 10;
-		Game.players[Game.currentPlayer].deposit += interest;
-		Window.showGetInfo(interest + Vocab.PlayersInfoListHead[3] + "利息");
+	public void interest(int player) {
+		int interest = Game.players[player].deposit / 10;
+		Game.players[player].deposit += interest;
+		Window.showGetInfo(player, interest + Vocab.PlayersInfoListHead[3] + "利息");
+	}
+	
+	public void tax(int player, int times) {
+		int tax = Game.players[player].deposit / 10 * times;
+		Game.players[player].deposit -= tax;
+		Window.showLossInfo(player, 3, tax);
 	}
 }

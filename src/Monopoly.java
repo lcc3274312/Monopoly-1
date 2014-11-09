@@ -33,11 +33,11 @@ public class Monopoly {
 					Window.showMenu();
 					menuSelection();
 				}
+				if (Time.endOfMonth()) {
+					Game.bank.interest(Game.currentPlayer);
+				}
 			}	
 			Time.nextDay();
-			if (Time.endOfMonth()) {
-				Game.bank.interest();
-			}
 		}
 	}
 
@@ -69,8 +69,15 @@ public class Monopoly {
 			Game.map.show();
 			Window.showMapRegeneratePrompt();
 		} while (Helper.getStr().equals("r"));
-		System.arraycopy(Game.map.image, 0, Game.mapWithInfo.image, 0, Game.map.image.length);
-		System.arraycopy(Game.map.route, 0, Game.mapWithInfo.route, 0, Game.map.route.length);
+		// copy map
+		for (int i = 0; i < Map.HEIGHT; i++) {
+			for (int j = 0; j < Map.WIDTH; j++) {
+				Game.mapWithInfo.image[j][i] = Game.map.image[j][i];
+			}
+		}
+		for (int i = 0; i < Map.length; i++) {
+			Game.mapWithInfo.route[i] = Game.map.route[i];
+		}
 	}
 	
 	public static void setTime() {
@@ -85,7 +92,7 @@ public class Monopoly {
 		switch (Helper.getInt(0, Vocab.Command.length - 1)) {
 		case 0: showMapWithInfo();       break;
 		case 1: showMap();               break;
-		case 2:                          break;
+		case 2: showItemList();          break;
 		case 3: showBarrierIn10Steps();  break;
 		case 4: showInfoOfCertainCell(); break;
 		case 5: showPlayersInfo();       break;
@@ -108,6 +115,15 @@ public class Monopoly {
 		Game.map.show(); 
 		Helper.getEnter();
 	}
+	
+	private static void showItemList() {
+		Window.showItemSelectList(Game.players[Game.currentPlayer].items);
+		int n = Helper.getInt(0, Game.players[Game.currentPlayer].items.length - 1);
+		if (n != 0) {
+			Game.players[Game.currentPlayer].useItem(n);
+		}	
+	}
+	
 	
 	private static void showBarrierIn10Steps() {
 		Window.showBarrier(10);
@@ -136,6 +152,10 @@ public class Monopoly {
 	
 	private static void diceAndGo() {
 		int step = dice();
+		if (Game.players[Game.currentPlayer].slowRound > 0) {
+			step = 1;
+			Game.players[Game.currentPlayer].slowRound--;
+		}
 		Window.showDiceInfo(step);
 		Game.players[Game.currentPlayer].move(step);
 		Helper.getEnter();
@@ -168,6 +188,11 @@ public class Monopoly {
 	private static void caseLocation() {
 		switch (Game.mapWithInfo.route[Game.players[Game.currentPlayer].location].type) {
 		case 0: fieldDeal(); break;
+		case 1: shopDeal();  break;
+		case 2: /* dealed in move() */ break;
+		case 3: new Item(11); break; // news
+		case 4: new Item(12); break;
+		case 5: getItem(); break;
 		case 6: getCoupon(); break;
 		}
 		
@@ -198,6 +223,21 @@ public class Monopoly {
 	}
 
 
+	private static void shopDeal() {
+		Window.showCellGreeting(1);
+		Window.showShopMenu();
+		int n = Helper.getInt(0, Item.ItemNum);
+		if (n != 0) {
+			
+		}
+	}
+
+
+	private static void getItem() {
+		int randItem = Helper.rand(10) + 1;
+		Game.players[Game.currentPlayer].getItem(randItem);
+	}
+	
 	private static void getCoupon() {
 		int randCoupon = Helper.rand(5) * 10 + 10;
 		Game.players[Game.currentPlayer].getCoupon(randCoupon);
