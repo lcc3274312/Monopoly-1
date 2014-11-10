@@ -15,7 +15,7 @@ public class Player {
 	public int slowRound = 0, fineFreeRound = 0;//, cellRobRound = 0;
 	// define cells[] items[]
 	public boolean[] cells = new boolean[Map.length];
-	public int[] items = {0,1,2,3,4,5,6,7,8,9,10};//new int[Item.ItemNum];
+	public int[] items = new int[Item.ItemNum];
 	
 	// def initialize
 	public Player() {

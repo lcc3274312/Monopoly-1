@@ -128,6 +128,7 @@ public class Vocab {
 	public static final String NoError = "操作成功！\n";
 	public static final String InputError = "不可用的输入值！请重新输入：";
 	public static final String LackOfCashError = "您当前的现金不足！\n";
+	public static final String LackOfCouponError = "您当前的点券不足！\n";
 	public static final String LackOfDepositError = "您当前的存款不足！\n";
 	public static final String LackOfItemError = "您当前无此道具！\n";
 	public static final String IllegalItemUseError = "您无法在当前位置使用此道具！\n";

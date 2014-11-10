@@ -222,14 +222,20 @@ public class Monopoly {
 		
 	}
 
-
 	private static void shopDeal() {
 		Window.showCellGreeting(1);
-		Window.showShopMenu();
-		int n = Helper.getInt(0, Item.ItemNum);
-		if (n != 0) {
-			
-		}
+		int n ;//= Helper.getInt(0, Item.ItemNum);
+		do {
+			Window.showShopMenu();
+			n = Helper.getInt(0, Item.ItemNum);
+			if (Game.players[Game.currentPlayer].coupon >= Item.Price[n]) {
+				Game.players[Game.currentPlayer].coupon -= Item.Price[n];
+				Game.players[Game.currentPlayer].items[n] += 1;
+				Window.showErrorInfo(Vocab.NoError);
+			} else {
+				Window.showErrorInfo(Vocab.LackOfCouponError);
+			}
+		} while (n != 0);
 	}
 
 

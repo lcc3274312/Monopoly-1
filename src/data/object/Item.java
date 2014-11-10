@@ -7,6 +7,7 @@ import data.module.Window;
 
 public class Item {
 	public static final int ItemNum = 11;  // 0 for cancel
+	public static final int[] Price = {0,10,10,10,10,10,10,10,10,10,10};
 	
 	public Item(int type) {
 		switch(type) {
