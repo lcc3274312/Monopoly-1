@@ -13,8 +13,13 @@ public class Vocab {
 	/** Date output */
 	public static final String DateShowFormat = "今天是yyyy年MM月dd日\n";
 	
-	/** Menu */
+	/** Player state */
 	public static final String CurrentPlayerInfo = "现在是%s的操作时间，您的前进方向是%s。\n";
+	public static final String[] PlayerDirection = {"顺时针","","逆时针"};
+	public static final String PlayerSlowState = "当前的减速状态还剩%d回合\n";
+	public static final String PlayerFineFreeState = "当前的免除过路费状态还剩%d回合\n";
+	
+	/** Menu */
 	public static final String[] Command = {
 		"查看地图",
 		"查看原始地图",
@@ -98,7 +103,6 @@ public class Vocab {
 	public static final String LotteryInfo = "你来到了彩票点。\n恭喜！你中了%s等奖！\n";
 	public static final String LotteryMissInfo = "你来到了彩票点。\n很遗憾，你没有中奖。\n";
 	public static final String[] LotteryLV = {"","一","二","三"};
-	//public static final String FinedInfo = "你缴纳了%d过路费给了玩家%s.\n";
 	
 	public static final String buyPrompt = "是否购买？（1-确定，0-取消）";
 	public static final String levelUpPrompt = "是否升级？（1-确定，0-取消）";
@@ -115,7 +119,6 @@ public class Vocab {
 		"新闻：每个人得到一张卡片！\n"
 	};
 	
-	//public static final String ItemUseInfo = "玩家%s使用了%s.\n";
 	public static final String showItemBuyPrompt = "请选择你要买的道具，输入0退出！\n";
 	public static final String[] ItemName = {
 		"","转向卡","乌龟卡","路障","购地卡","查税卡","均富卡","拆迁卡","怪兽卡","财神卡","福神卡"
@@ -136,5 +139,5 @@ public class Vocab {
 	public static final String UnknownSaveError = "存档时遇到未知错误！游戏将继续进行。\n";
 	public static final String UnknownLoadError = "读档时遇到未知错误！游戏将退出。\n我猜你多半是想改存档作弊~";
 
-
+	//public static final String ContinuePrompt = "输入回车键以继续……";
 }

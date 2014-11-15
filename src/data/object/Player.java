@@ -18,8 +18,8 @@ public class Player {
 	public int[] items = new int[Item.ItemNum];
 	
 	// def initialize
-	public Player() {
-	}
+	//public Player() {
+	//}
 	
 	// def method
 	/** Control player to move */
@@ -122,10 +122,8 @@ public class Player {
 						}
 					}
 				}
-				if (isFailed) {  // need +  // support 2 players
-					Window.showEndGameWithWinOf(Game.players[3 - Game.currentPlayer]);
-					Helper.getEnter();
-					System.exit(0);
+				if (isFailed) {  
+					Helper.commitFail();
 				}
 			}
 		}
@@ -151,6 +149,15 @@ public class Player {
 	
 	public void calTotalAssets() {
 		totalAssets = cash + deposit + property;
+	}
+	
+	public void stateFadeOut() {
+		if (slowRound > 0) {
+			slowRound -= 1;
+		}
+		if (fineFreeRound > 0) {
+			fineFreeRound -= 1;
+		}
 	}
 	
 	// def private method

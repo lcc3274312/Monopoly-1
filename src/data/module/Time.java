@@ -20,4 +20,8 @@ public class Time {
   	public static String getFormattedDate() {
   		return Game.dateFormat.format(Game.date);
   	}
+  	
+  	public static boolean isEndOfYear() {
+  		return (Game.dateCalendar.get(Calendar.YEAR) == 2015);
+  	}
 }

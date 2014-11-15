@@ -21,8 +21,18 @@ public class Window {
 		System.out.print(Game.dateShowFormat.format(Game.date));
 	}
 	
+	public static void showPlayerState() {
+		if (Game.players[Game.currentPlayer].slowRound > 0) {
+			System.out.printf(Vocab.PlayerSlowState, Game.players[Game.currentPlayer].slowRound);
+		}
+		if (Game.players[Game.currentPlayer].fineFreeRound > 0) {
+			System.out.printf(Vocab.PlayerFineFreeState, Game.players[Game.currentPlayer].fineFreeRound);
+		}
+	}
+	
 	public static void showMenu() {
-		System.out.printf(Vocab.CurrentPlayerInfo, Game.players[Game.currentPlayer].name,"");
+		System.out.printf(Vocab.CurrentPlayerInfo, Game.players[Game.currentPlayer].name, Vocab.PlayerDirection[Game.players[Game.currentPlayer].direction + 1]);
+		showPlayerState();
 		for (int i = 0; i < Vocab.Command.length; i++) {
 			System.out.println(i + " - " + Vocab.Command[i]);
 		}
@@ -116,7 +126,7 @@ public class Window {
 	
 	public static void showItemSelectList(int[] list) {
 		System.out.println("0 - È¡Ïû");
-		for (int i = 0; i < list.length; i++) {
+		for (int i = 1; i < list.length; i++) {
 			if (list[i] > 0) {
 				System.out.println(i + " - " + Vocab.ItemName[i] + "*" + list[i]);
 			}

@@ -3,7 +3,9 @@ package data.module;
 import java.io.IOException;
 import java.util.Scanner;
 
+import data.global.Game;
 import data.object.Map;
+import data.object.Player;
 
 public class Helper {
 	
@@ -60,5 +62,22 @@ public class Helper {
 			System.in.read();                          
         } catch(IOException e){   
         }  
+	}
+	
+	/** Switch player
+	 *  rewrite it if you change the player number */
+	public static void switchPlayer() {
+		Game.currentPlayer = 3 - Game.currentPlayer;
+	}
+	
+	public static void commitFail() {
+		switchPlayer();
+		endGameWithWinOf(Game.players[Game.currentPlayer]);
+	}
+	
+	public static void endGameWithWinOf(Player p) {
+		Window.showEndGameWithWinOf(p);
+		getEnter();
+		System.exit(0);
 	}
 }

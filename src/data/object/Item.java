@@ -26,7 +26,6 @@ public class Item {
 		}
 	}
 
-
 	private void useTurnAround() {
 		boolean[] targetPlayers = findPlayers(5, true);
 		System.out.println("«Î—°‘Ò£∫");
@@ -59,7 +58,6 @@ public class Item {
 		} 
 	}
 	
-
 	private void useBarrier() {
 		Window.showBarrierSetPrompt();
 		int n = Helper.getInt(-8, 8);
@@ -104,7 +102,6 @@ public class Item {
 		Game.players[Game.currentPlayer].items[6] -= 1;
 		Window.showErrorInfo(Vocab.NoError);
 	}
-
 
 	private void useTearDown() {
 		if (Game.mapWithInfo.route[Game.players[Game.currentPlayer].location].street == 0) {

@@ -46,12 +46,12 @@ public class Game {
     public static Date date ;
   	public static Calendar dateCalendar = Calendar.getInstance();
   	
-  	// Save game
+  	/** Save game */
   	public static void save() throws IOException {
   		File f = new File("save.mono");
   		if (f.exists()) {
             f.delete();
-        }
+        } // or saves will be old one
   		RandomAccessFile saves = new RandomAccessFile(f, "rw");  
   		// Save maps
  		for (int i = 0; i < Map.WIDTH; i++ ) {
@@ -100,7 +100,7 @@ public class Game {
  		saves.close();
   	}
   	
-  	// Load game
+  	/** Load game */
   	public static void load() throws IOException {
   		File f = new File("save.mono");
   		if (f.exists()) {

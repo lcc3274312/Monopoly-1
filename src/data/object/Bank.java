@@ -16,7 +16,6 @@ public class Bank {
 			case 2: flag = false;
 			}	
 		}
-		
 	}
 	
 	public void save() {
