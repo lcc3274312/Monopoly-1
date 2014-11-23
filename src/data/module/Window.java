@@ -94,13 +94,17 @@ public class Window {
 		System.out.printf(Vocab.ShowEndGame, player.name);
 	}
 	
-	// item can be 500 + vocab.xxx[x]xianjin
+	// item like 500 + vocab.xxx[x] (yuan,etc)
 	public static void showGetInfo(int player, String item) {
 		System.out.printf(Vocab.GetInfo,Game.players[player].name, item);
 	}
 	
 	public static void showLossInfo(int player, int type, int amount) {
 		System.out.printf(Vocab.LossInfo,Game.players[player].name, amount, Vocab.PlayersInfoListHead[type]);
+	}
+	
+	public static void showCellLossInfo(int player, int street, int streetNo) {
+		System.out.printf(Vocab.CellLossInfo,Game.players[player].name, Vocab.StreetName[street].replace("%d", String.valueOf(streetNo)));
 	}
 	
 	public static void showLotteryInfo(int lv) {

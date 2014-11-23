@@ -46,6 +46,15 @@ public class Game {
     public static Date date ;
   	public static Calendar dateCalendar = Calendar.getInstance();
   	
+  	// Set debug mode
+  	public static boolean debugMode = false;
+  	static {
+  		File f = new File("data/global/Debug.class");
+  		if (f.exists()) {
+            debugMode = true;
+        } 
+  	}
+  	
   	/** Save game */
   	public static void save() throws IOException {
   		File f = new File("save.mono");

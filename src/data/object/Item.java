@@ -256,7 +256,9 @@ public class Item {
 	private void itemAll() {
 		Window.showNewsReport(4, 0, 0);
 		for (int i = 1; i < Game.players.length; i++) {
-			Game.players[i].getItem(Helper.rand(10) + 1);
+			int randItem = Helper.rand(10) + 1;
+			Game.players[i].items[randItem] += 1;
+			Window.showGetInfo(i, Vocab.ItemName[randItem]);
 		}
 	}
 	//==============================

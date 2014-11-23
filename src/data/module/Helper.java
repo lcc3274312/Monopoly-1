@@ -3,6 +3,7 @@ package data.module;
 import java.io.IOException;
 import java.util.Scanner;
 
+import data.global.Debug;
 import data.global.Game;
 import data.object.Map;
 import data.object.Player;
@@ -79,5 +80,17 @@ public class Helper {
 		Window.showEndGameWithWinOf(p);
 		getEnter();
 		System.exit(0);
+	}
+	
+	public static void debug() {
+  		if (Game.debugMode) {
+            Debug.run();
+        } 
+	}
+	
+	public static void autoDebug() {
+		if (Game.debugMode) {
+            Debug.auto();
+        } 
 	}
 }

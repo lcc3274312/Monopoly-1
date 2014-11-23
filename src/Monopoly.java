@@ -28,6 +28,7 @@ public class Monopoly {
 				afterLoad = false;
 				while (!endRound) {          // break if one player finish
 					Window.showDateInfo();
+					//Helper.autoDebug();       
 					Window.showMenu();
 					menuSelection();
 				}
@@ -91,7 +92,7 @@ public class Monopoly {
 	}
 	
 	public static void menuSelection() {
-		switch (Helper.getInt(0, Vocab.Command.length - 1)) {
+		switch (Helper.getInt(0, Vocab.Command.length)) {
 		case 0: showMapWithInfo();       break;
 		case 1: showMap();               break;
 		case 2: showItemList();          break;
@@ -101,6 +102,7 @@ public class Monopoly {
 		case 6: diceAndGo();             break;
 		case 7: save();					 break;
 		case 8: Helper.commitFail();
+		case 9: Helper.debug();  // Debug(kai gua) mode
 		}
 	}
 
@@ -151,10 +153,14 @@ public class Monopoly {
 	}
 	
 	private static void diceAndGo() {
-		int step = dice();
-		if (Game.players[Game.currentPlayer].slowRound > 0) {
+		int step = 0;
+		if (Game.debugMode && Debug.step != 0) {
+			step = Debug.step;
+			Debug.step = 0;
+		} else if (Game.players[Game.currentPlayer].slowRound > 0) {
 			step = 1;
-			//Game.players[Game.currentPlayer].slowRound--;
+		} else {
+			step = dice();
 		}
 		Window.showDiceInfo(step);
 		Game.players[Game.currentPlayer].move(step);
@@ -183,7 +189,8 @@ public class Monopoly {
 			System.exit(0);
 		}	
 	}
-	//==============================
+	
+	//==================================================================
 	
 	private static void caseLocation() {
 		switch (Game.mapWithInfo.route[Game.players[Game.currentPlayer].location].type) {

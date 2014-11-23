@@ -6,7 +6,7 @@ import data.module.Vocab;
 import data.module.Window;
 
 public class Player {
-	// attr_accessor
+	
 	public String name = Vocab.AvailableCell, icon = "\u3000\u3000";
 	public int location = 0, direction = 1;
 	public int cash = 5000, deposit = 0, coupon = 0, property = 0;
@@ -16,10 +16,6 @@ public class Player {
 	// define cells[] items[]
 	public boolean[] cells = new boolean[Map.length];
 	public int[] items = new int[Item.ItemNum];
-	
-	// def initialize
-	//public Player() {
-	//}
 	
 	// def method
 	/** Control player to move */
@@ -50,7 +46,6 @@ public class Player {
 	}
 	
 	public void buy() {   // only can buy cell at your current location
-		// by default location always equals to players[cplayer].location
 		if (cash >= Game.mapWithInfo.route[location].price * Game.mapWithInfo.route[location].level) {
 			cash -= Game.mapWithInfo.route[location].price * Game.mapWithInfo.route[location].level;
 			cells[location] = true;
@@ -68,6 +63,7 @@ public class Player {
 			cash -= Game.mapWithInfo.route[location].price / 2;
 			Game.mapWithInfo.route[location].level += 1;
 			property += Game.mapWithInfo.route[location].price;
+			Window.showErrorInfo(Vocab.NoError);
 		} else {
 			Window.showErrorInfo(Vocab.LackOfCashError);
 		}
@@ -114,7 +110,7 @@ public class Player {
 						property -= value;
 						if (value >= fineRemaining) {
 							cash += value - fineRemaining;
-							Window.showLossInfo(Game.currentPlayer, 4, Game.mapWithInfo.route[i].street); // need +
+							Window.showCellLossInfo(Game.currentPlayer, Game.mapWithInfo.route[i].street, Game.mapWithInfo.route[i].streetNo); // need +
 							isFailed = false;
 							break;
 						} else {
@@ -144,7 +140,7 @@ public class Player {
 	
 	public void getItem(int itemGet) {
 		items[itemGet] += 1;
-		Window.showGetInfo(Game.currentPlayer,Vocab.ItemName[itemGet]);
+		Window.showGetInfo(Game.currentPlayer, Vocab.ItemName[itemGet]);
 	}
 	
 	public void calTotalAssets() {
