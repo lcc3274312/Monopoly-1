@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.text.ParseException;
-
 import data.object.*;
 import data.module.*;
 import data.global.*;
@@ -9,43 +8,44 @@ public class Monopoly {
 	
 	public static void main(String[] args) {
 		Window.showGreeting();
-		//switch (Helper.getStr()) {
-		//case "x": System.exit(0); break;
-		//case "s": break;
-		//default: initialize();
-		//}
-		//initialize();
-		load();
-		setTime();
+		switch (Helper.getStr()) {
+		case "x": System.exit(0); break;
+		case "s": load(); break;
+		default: initialize();
+		}
+		setTime();   // time still need set when load
 		start();  
 	}
 	
-
-
+	/** Game logic */
+	static boolean afterLoad = false;
 	static boolean endRound = false;
-	
 	private static void start() {
-		while (true) {
-			//System.out.print(true);
-			for (int i = Game.currentPlayer; i < Game.players.length; i++) {   // one round
-				endRound = false;
+		// after load, run remaining round
+		while (true) {  
+			for (int i = (afterLoad ? Game.currentPlayer : 1); i < Game.players.length; i++) {   // one round
+				endRound = false; 
+				afterLoad = false;
 				while (!endRound) {          // break if one player finish
-				System.out.print(true);
 					Window.showDateInfo();
+					//Helper.autoDebug();       
 					Window.showMenu();
 					menuSelection();
 				}
+				Game.players[Game.currentPlayer].stateFadeOut();
+				if (Time.endOfMonth()) {
+					Game.bank.interest(Game.currentPlayer);
+				}
 			}	
 			Time.nextDay();
-			if (Time.endOfMonth()) {
-				// fa li xi
+			if (Time.isEndOfYear()) {
+				Helper.endGameWithWinOf(richestPlayer());
 			}
 		}
 	}
-
 	
 	/** initialize the players, map, time 
-	 * // to give them values != create them */
+	 * these objects is created in Game.java */
 	public static void initialize() {
 		setPlayers();
 		setMap();
@@ -71,10 +71,18 @@ public class Monopoly {
 			Game.map.show();
 			Window.showMapRegeneratePrompt();
 		} while (Helper.getStr().equals("r"));
-		System.arraycopy(Game.map.image, 0, Game.mapWithInfo.image, 0, Game.map.image.length);
-		System.arraycopy(Game.map.route, 0, Game.mapWithInfo.route, 0, Game.map.route.length);
+		// copy map
+		for (int i = 0; i < Map.HEIGHT; i++) {
+			for (int j = 0; j < Map.WIDTH; j++) {
+				Game.mapWithInfo.image[j][i] = Game.map.image[j][i];
+			}
+		}
+		for (int i = 0; i < Map.length; i++) {
+			Game.mapWithInfo.route[i] = Game.map.route[i];
+		}
 	}
 	
+	/** Set game time using Calendar */
 	public static void setTime() {
   		try {
   			Game.date = Game.dateFormat.parse(Time.nowStr);
@@ -84,21 +92,19 @@ public class Monopoly {
 	}
 	
 	public static void menuSelection() {
-		switch (Helper.getInt(0, Vocab.Command.length - 1)) {
+		switch (Helper.getInt(0, Vocab.Command.length)) {
 		case 0: showMapWithInfo();       break;
 		case 1: showMap();               break;
-		case 2:                          break;
+		case 2: showItemList();          break;
 		case 3: showBarrierIn10Steps();  break;
 		case 4: showInfoOfCertainCell(); break;
 		case 5: showPlayersInfo();       break;
 		case 6: diceAndGo();             break;
 		case 7: save();					 break;
-		case 8: endGame();
+		case 8: Helper.commitFail();
+		case 9: Helper.debug();  // Debug(kai gua) mode
 		}
-
 	}
-	
-
 
 	// Selection methods
 	private static void showMapWithInfo() {
@@ -111,6 +117,14 @@ public class Monopoly {
 	private static void showMap() {
 		Game.map.show(); 
 		Helper.getEnter();
+	}
+	
+	private static void showItemList() {
+		Window.showItemSelectList(Game.players[Game.currentPlayer].items);
+		int n = Helper.getInt(0, Game.players[Game.currentPlayer].items.length - 1);
+		if (n != 0) {
+			Game.players[Game.currentPlayer].useItem(n);
+		}	
 	}
 	
 	private static void showBarrierIn10Steps() {
@@ -139,16 +153,21 @@ public class Monopoly {
 	}
 	
 	private static void diceAndGo() {
-		int step = dice();
+		int step = 0;
+		if (Game.debugMode && Debug.step != 0) {
+			step = Debug.step;
+			Debug.step = 0;
+		} else if (Game.players[Game.currentPlayer].slowRound > 0) {
+			step = 1;
+		} else {
+			step = dice();
+		}
 		Window.showDiceInfo(step);
-		// need to rewrite
-		//Game.players[Game.currentPlayer].location += step * Game.players[Game.currentPlayer].direction;
-		//Game.players[Game.currentPlayer].location = Helper.ensure(Game.players[Game.currentPlayer].location);
 		Game.players[Game.currentPlayer].move(step);
 		Helper.getEnter();
 		showMapWithInfo();
 		caseLocation();
-		switchPlayer();
+		Helper.switchPlayer();
 		endRound = true;
 	}
 	
@@ -156,46 +175,102 @@ public class Monopoly {
 		try {
 			Game.save();
 		} catch (IOException e) {
-			System.out.print(Vocab.UnknownSaveError);
+			Window.showErrorInfo(Vocab.UnknownSaveError);
 		}	
 	}
 
 	private static void load() {
 		try {
 			Game.load();
+			afterLoad = true;
 		} catch (IOException e) {
-			System.out.print(Vocab.UnknownLoadError);
+			Window.showErrorInfo(Vocab.UnknownLoadError);
 			Helper.getEnter();
 			System.exit(0);
 		}	
 	}
-	//==============================
-
 	
+	//==================================================================
 	
 	private static void caseLocation() {
 		switch (Game.mapWithInfo.route[Game.players[Game.currentPlayer].location].type) {
-		case 0:
-		case 6:
+		case 0: fieldDeal(); break;
+		case 1: shopDeal();  break;
+		case 2: /* deal in move() */ break;
+		case 3: new Item(11); break; // news
+		case 4: new Item(12); break; // lottery
+		case 5: getItem(); break;
+		case 6: getCoupon(); break;
 		}
-		
 	}
 
+	/** Decide if buy, raise level or fine */
+	private static void fieldDeal() {
+		Window.showCellInfo(0);
+		if (Game.mapWithInfo.route[Game.players[Game.currentPlayer].location].owner == 0) {
+			Window.buyPrompt();
+			switch (Helper.getInt(0, 1)) {
+			case 1: Game.players[Game.currentPlayer].buy();
+			case 0:
+			}
+		} else if (Game.mapWithInfo.route[Game.players[Game.currentPlayer].location].level < Cell.MAX_LEVEL && Game.mapWithInfo.route[Game.players[Game.currentPlayer].location].owner == Game.currentPlayer) {
+			Window.levelUpPrompt();
+			switch (Helper.getInt(0, 1)) {
+			case 1: Game.players[Game.currentPlayer].levelUp();
+			case 0:
+			}
+		} else {
+			if (!(Game.players[Game.currentPlayer].fineFreeRound > 0)) {
+				Game.players[Game.currentPlayer].fined();
+			} 
+		}
+	}
 
+	/** Shop deal
+	 *  maybe it should be written in Player.java  */
+	private static void shopDeal() {
+		Window.showCellGreeting(1);
+		int n = 0;
+		do {
+			Window.showShopMenu();
+			n = Helper.getInt(0, Item.ItemNum);
+			if (Game.players[Game.currentPlayer].coupon >= Item.Price[n]) {
+				Game.players[Game.currentPlayer].coupon -= Item.Price[n];
+				Game.players[Game.currentPlayer].items[n] += 1;
+				Window.showErrorInfo(Vocab.NoError);
+			} else {
+				Window.showErrorInfo(Vocab.LackOfCouponError);
+			}
+		} while (n != 0);
+	}
+
+	private static void getItem() {
+		int randItem = Helper.rand(10) + 1;
+		Game.players[Game.currentPlayer].getItem(randItem);
+	}
+	
+	private static void getCoupon() {
+		int randCoupon = Helper.rand(5) * 10 + 10;
+		Game.players[Game.currentPlayer].getCoupon(randCoupon);
+	}
+
+	/** Get random 1 ~ 6 */
 	private static int dice() {
 		return Helper.rand(6) + 1; 
 	}
 	
-	/** Switch player
-	 *  rewrite it if you change the player number */
-	private static void switchPlayer() {
-		Game.currentPlayer = 3 - Game.currentPlayer;
-	}
-	
-	public static void endGame() {
-		switchPlayer();
-		Window.showEndGameWithWinOf(Game.players[Game.currentPlayer]);
-		Helper.getEnter();
-		System.exit(0);
+	/** Get richest player. use when time ends */
+	private static Player richestPlayer() {
+		for (int i = 1; i < Game.players.length; i++) {
+			Game.players[i].calTotalAssets();
+		}
+		int richestIndex = 1;
+		for (int i = 1; i < Game.players.length; i++) {
+			// if two players have the same assets, show the first one win
+			if (Game.players[i].totalAssets > Game.players[richestIndex].totalAssets) {
+				richestIndex = i;
+			}
+		}
+		return Game.players[richestIndex];
 	}
 }

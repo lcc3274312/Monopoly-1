@@ -6,14 +6,13 @@ import data.module.Vocab;
 import data.module.Window;
 
 public class Map {
-	// attr_accessor
+
 	public static final int WIDTH = 20, HEIGHT = 10;
 	public static int length = 56; // Design to accept user's DIY map
 	
 	public String[][] image = new String[WIDTH][HEIGHT];
 	public Cell[] route = new Cell[length];
 	
-	// def initialize
 	/** Fill image with blank */
 	public Map() {
 		for (int i = 0; i < WIDTH; i++ ) {
@@ -23,7 +22,6 @@ public class Map {
 		}
 	}
 	
-	//def method
 	/** Generate the map by random */
 	public void generateByRandom() {
 		generateShape();

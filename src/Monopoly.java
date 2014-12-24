@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.text.ParseException;
+
 import data.object.*;
 import data.module.*;
 import data.global.*;
@@ -36,6 +37,7 @@ public class Monopoly {
 				if (Time.endOfMonth()) {
 					Game.bank.interest(Game.currentPlayer);
 				}
+				Helper.getEnter();
 			}	
 			Time.nextDay();
 			if (Time.isEndOfYear()) {
@@ -174,6 +176,7 @@ public class Monopoly {
 	private static void save() {
 		try {
 			Game.save();
+			Window.showErrorInfo(Vocab.NoError);
 		} catch (IOException e) {
 			Window.showErrorInfo(Vocab.UnknownSaveError);
 		}	

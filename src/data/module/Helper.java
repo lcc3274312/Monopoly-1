@@ -26,11 +26,11 @@ public class Helper {
 		return location;
 	}
 	
-	/** This method ensure the user to input an Integer. */
+	/** Ensure the user to input an Integer. */
+	@SuppressWarnings("resource")
 	public static int getInt() {
 		Scanner input =  new Scanner(System.in);	
 		int n = 0; 
-		// the following codes come from https://gist.github.com/Zeing/a7007deaff983b33a1e0
 		boolean isInt = false;
 		while (!isInt) {
 			String str_n = input.next();
@@ -44,6 +44,7 @@ public class Helper {
 		return n;
 	}
 	
+	/** Ensure the user to input an Integer of a certain range. */
 	public static int getInt(int min, int max) {
 		int n = getInt();
 		while (!(min <= n && n <= max)) {
@@ -53,12 +54,14 @@ public class Helper {
 		return n;
 	}
 	
+	@SuppressWarnings("resource")
 	public static String getStr() {
 		Scanner input =  new Scanner(System.in);
 		return input.next();
 	}
 	
 	public static void getEnter() {
+		//System.out.print("<回车以继续>\n");
 		try {  
 			System.in.read();                          
         } catch(IOException e){   

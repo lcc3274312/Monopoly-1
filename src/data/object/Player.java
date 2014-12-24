@@ -17,7 +17,6 @@ public class Player {
 	public boolean[] cells = new boolean[Map.length];
 	public int[] items = new int[Item.ItemNum];
 	
-	// def method
 	/** Control player to move */
 	public void move(int step) {
 		// whether player can move?
@@ -56,6 +55,7 @@ public class Player {
 		} else {
 			Window.showErrorInfo(Vocab.LackOfCashError);
 		}
+		Helper.getEnter();
 	}
 	
 	public void levelUp() {
@@ -123,8 +123,7 @@ public class Player {
 				}
 			}
 		}
-		Game.players[3 - Game.currentPlayer].cash += fine;
-		// need rewrite
+		Game.players[3 - Game.currentPlayer].cash += fine;		// need rewrite
 		Window.showGetInfo(3 - Game.currentPlayer, fine + Vocab.PlayersInfoListHead[2]);
 	}
 	
@@ -156,7 +155,6 @@ public class Player {
 		}
 	}
 	
-	// def private method
 	/** One step and deal with sth */
 	private void step() {
 		location += direction;

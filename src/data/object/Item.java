@@ -7,8 +7,9 @@ import data.module.Window;
 
 public class Item {
 	public static final int ItemNum = 11;  // 0 for cancel
-	public static final int[] Price = {0,10,10,10,10,10,10,10,10,10,10};
+	public static final int[] Price = {0,20,20,20,30,20,20,20,30,30,30};
 	
+	/** new Item(x) to use item */
 	public Item(int type) {
 		switch(type) {
 		case 1: useTurnAround(); break;
@@ -26,6 +27,7 @@ public class Item {
 		}
 	}
 
+	// Following methods define using different cards
 	private void useTurnAround() {
 		boolean[] targetPlayers = findPlayers(5, true);
 		System.out.println("«Î—°‘Ò£∫");
@@ -135,7 +137,7 @@ public class Item {
 		Window.showErrorInfo(Vocab.NoError);
 	}
 	
-	//=============================
+	// Following is methods that needed to form useXXX methods 
 	private void turnAround(int targetPlayer) {
 		Game.players[targetPlayer].direction = 0 - Game.players[targetPlayer].direction;
 	}
@@ -167,6 +169,7 @@ public class Item {
 				Game.players[oldOwner].cash += Game.mapWithInfo.route[i].price * Game.mapWithInfo.route[i].level * 3 / 2;
 				Game.players[oldOwner].property -= Game.mapWithInfo.route[i].price * Game.mapWithInfo.route[i].level;
 				Game.mapWithInfo.route[i].owner = 0;
+				Game.mapWithInfo.route[i].icon = Vocab.CellIcon[0];
 			}
 		}
 	}
@@ -193,7 +196,7 @@ public class Item {
 		Game.players[Game.currentPlayer].fineFreeRound += 8;
 	}
 	
-	//==============================
+	/** Lottery cell */
 	private void lottery() {
 		int n = Helper.rand(10);
 		if (n == 0) {
@@ -213,6 +216,7 @@ public class Item {
 		}
 	}
 	
+	/** News cell */
 	private void news() {
 		int n = Helper.rand(Vocab.News.length);
 		switch (n) {
@@ -225,6 +229,7 @@ public class Item {
 		}
 	}
 	
+	// Following methods define different news
 	private void rewardMaxCellPlayer() {
 		int reward = 100 * (Helper.rand(13) + 8);
 		int player = findMaxCellPlayer();
@@ -240,17 +245,17 @@ public class Item {
 	}
 
 	private void interestAll() {
+		Window.showNewsReport(2, 0, 0);
 		for (int i = 1; i < Game.players.length; i++) {
 			Game.bank.interest(i);
 		}
-		Window.showNewsReport(2, 0, 0);
 	}
 
 	private void taxAll() {
+		Window.showNewsReport(3, 0, 0);
 		for (int i = 1; i < Game.players.length; i++) {
 			Game.bank.tax(i,1);
 		}
-		Window.showNewsReport(3, 0, 0);
 	}
 	
 	private void itemAll() {
@@ -261,7 +266,8 @@ public class Item {
 			Window.showGetInfo(i, Vocab.ItemName[randItem]);
 		}
 	}
-	//==============================
+	
+	// Following is methods that needed to form all former methods 
 	private boolean[] findPlayers(int radius, boolean includeSelf) {
 		int location = 0;
 		boolean[] playersExist = new boolean[Game.players.length];

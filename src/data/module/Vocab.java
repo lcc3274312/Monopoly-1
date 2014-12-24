@@ -69,14 +69,14 @@ public class Vocab {
 	};
 	public static final String[] StreetName = {
 		"",     // when 0, the cell is not for sell
-		"まいづる鎮守府#%d\n",
-		"よこすか鎮守府#%d\n",
-		"くれ鎮守府#%d\n",
-		"させぼ鎮守府#%d\n",
-		"おおみなと警備府#%d\n",
-		"トラック泊地#%d\n",
-		"リンガ泊地#%d\n",
-		"ラバウル基地#%d\n"
+		"天元镇#%d\n",
+		"道吉镇#%d\n",
+		"104号道路#%d\n",
+		"金水市#%d\n",
+		"山木镇#%d\n",
+		"卡依市#%d\n",
+		"银叶市#%d\n",
+		"西达镇#%d\n"
 	};
 	public static final String[] CellInfoListHead = {
 		"类型：",
@@ -113,7 +113,7 @@ public class Vocab {
 	public static final String buyPrompt = "是否购买？（1-确定，0-取消）";
 	public static final String levelUpPrompt = "是否升级？（1-确定，0-取消）";
 	
-	/* Bank related */
+	/** Bank related */
 	public static final String bankPrompt = "您当前的现金是%d，存款是%d.\n请选择操作？（0-存钱，1-取钱，2-退出.）";
 	public static final String bankSavePrompt = "请输入想要存入的金额：";
 	public static final String bankGetPrompt = "请输入想要取出的金额：";

@@ -5,6 +5,7 @@ import data.module.*;
 
 public class Bank {
 	
+	/** Show greeting and prompt player to choose */
 	public void greeting() {
 		Window.showCellGreeting(2);
 		boolean flag = true;

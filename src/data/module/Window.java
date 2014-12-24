@@ -116,7 +116,11 @@ public class Window {
 	}
 	
 	public static void showNewsReport(int n, int player, int cash) {
-		System.out.printf(Vocab.News[n], Game.players[player].name, cash);
+		if (n == 0 || n == 1) {
+			System.out.printf(Vocab.News[n], Game.players[player].name, cash);
+		} else {
+			System.out.print(Vocab.News[n]);
+		}
 	}
 	
 	public static void showPlayerSelectList(boolean[] list) {
@@ -135,13 +139,15 @@ public class Window {
 				System.out.println(i + " - " + Vocab.ItemName[i] + "*" + list[i]);
 			}
 		}
+		System.out.print("«Î—°‘Ò£∫");
 	}
 	
 	public static void showShopMenu() {
 		System.out.print(Vocab.showItemBuyPrompt);
 		for (int i = 1; i < Vocab.ItemName.length; i++) {
-			System.out.println(i + " - " + Vocab.ItemName[i]);
+			System.out.println(i + " - " + Vocab.ItemName[i]+ " - " + Item.Price[i] + Vocab.PlayersInfoListHead[1]);
 		}
+		System.out.print("«Î—°‘Ò£∫");
 	}
 	
 	public static void showBarrierSetPrompt() {
@@ -151,11 +157,7 @@ public class Window {
 	public static void showBarrierBlock() {
 		System.out.print(Vocab.BarrierBlockInfo);
 	}
-	
-//	public static void showFinedInfo(int fine, String targetPlayer) {
-//		System.out.printf(Vocab.FinedInfo, fine, targetPlayer);
-//	}
-	
+
 	public static void showCellGreeting(int type) {
 		System.out.printf(Vocab.CellGreeting,Vocab.CellTypeName[type]);
 	}

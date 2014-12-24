@@ -5,7 +5,7 @@ import data.global.Game;
 
 public class Time {
 	
-	public static String startDate = "2014-01-01";
+	public static String startDate = "2014-2-27";
 	public static String nowStr = startDate;
 	
   	public static void nextDay() {
